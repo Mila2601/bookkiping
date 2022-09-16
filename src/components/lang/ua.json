@@ -1,0 +1,18 @@
+{
+    "greeting": "Привіт, {name}",
+    "myMessage": "Шось українською {date, time, ::MMdd}",
+    "addIncomeHere": "Внесіть свої витрати або доходи сюди:",
+    "designedBy": "Розроблено Людмилою Шуландт. Права захищені.",
+    "home": "Головна",
+    "planing": "Планування",
+    "statistics": "Статистика",
+    "categories": "Категорії",
+    "day": "День",
+    "month": "Місяць",
+    "planYourBills": "Запланувати витрати",
+    "editCategories": "Редагувати категорії",
+    "dayStatistic": "Статистика за дату",
+    "pageIsNotFound": "Сторінку не знайдено",
+    "year": "Рік"
+}
+
