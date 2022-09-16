@@ -5,8 +5,6 @@ import Day from './components/Day';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
-import DataUa from './components/lang/ua.js';
-import DataEn from './components/lang/en-US';
 import React from 'react';
 import { Store } from './Store';
 
@@ -16,18 +14,26 @@ import {
   Routes
 } from "react-router-dom";
 
-import {IntlProvider, FormattedMessage, FormattedNumber} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 
+function loadLocaleData(locale) {
+  switch (locale) {
+    case 'ua':
+      return require('./components/lang/ua.json')
+    default:
+      return require('./components/lang/en.json')
+  }
+}
 
 function App() {
 
-  const usersLocale = 'ua';
-  const messages = DataUa;
-  let store = Store;
-  console.log(`store is ${store}`);
+  const locale = 'ua';
+  const messages = loadLocaleData(locale);
+  // let store = Store;
+  // console.log(`store is ${store}`);
 
   return (
-    <IntlProvider locale={usersLocale} messages={messages}>
+    <IntlProvider locale={locale} messages={messages}>
     <div className="App">
       <BrowserRouter>
         <Header />
@@ -46,25 +52,6 @@ function App() {
           </Route> 
           <Route path="*" element={<NotFound />}/>       
         </Routes>
-
-
-      <p>
-        <FormattedMessage
-          id="myMessage"
-          defaultMessage="Today is {ts, date, ::yyMMdd}"
-          values={{ts: Date.now()}}
-        />
-        
-        <br />
-        <FormattedNumber value={19} style="currency" currency="EUR" />
-      </p>
-      <p>
-          <FormattedMessage
-          id='newMessage'
-          />
-        </p>
-        
-
         <Footer />
       </BrowserRouter>
     </div>
