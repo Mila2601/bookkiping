@@ -1,0 +1,6 @@
+{
+    "greeting": "Привіт, ",
+    "myMessage": "Шось українською {ts, date, ::dd.MM.yyyy}",
+    "newMessage": "new"
+}
+

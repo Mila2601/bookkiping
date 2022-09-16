@@ -1,0 +1,12 @@
+.App {
+  /*background-image: url("./media/pngegg.png");*/
+  background-repeat: repeat;
+  background-size: 30%;
+  background-color: #cccccc;
+  text-align: center;
+}
+
+.App .container {
+  padding-right: 0px;
+  padding-left: 0px;
+}

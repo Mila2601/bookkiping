@@ -1,0 +1,29 @@
+.left-menu {
+    width: 160px;
+    border-radius: 0 0 5px 0;
+    background-color: white;
+    float: left;
+    margin-right: 30px;
+    box-shadow: 2px 2px 10px rgb(220, 220, 220);
+    z-index: 1;
+}
+
+@media screen and (max-width: 600px) {
+    .left-menu.nav {
+        display: none;
+    }
+}
+
+a.nav-link {
+    text-align: left;
+    color: black;
+    padding: 0 20px;
+}
+
+.nav ul {
+    margin: 0;
+}
+
+ul a.nav-link {
+    padding-left: 0px;
+}
