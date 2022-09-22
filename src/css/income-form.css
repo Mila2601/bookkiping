@@ -1,0 +1,139 @@
+.income-form {
+	display: inline-block;
+	margin: 15px 0;
+	position: relative;
+}
+
+.income-form:after {
+	content: "";
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 0;
+	background-image: linear-gradient(to right, #94FECB, rgb(235, 235, 235));
+	border-radius: 10px;
+	transition: 0.2s;
+}
+
+.income-form:focus-within:after {
+	top: -3px;
+	left: -3px;
+	right: -3px;
+	bottom: -3px;
+}
+.form-inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	transition: 0.4s;
+	border-radius: 8px;
+}
+
+@media screen and (max-width: 920px) {
+	.form-inner {
+		flex-direction: column;
+	}
+}
+
+.form-inner input {
+	font-size: 1rem;
+	padding: 10px 15px;
+	background-color: #FFF;
+	border: 1px solid rgb(243, 243, 243);
+}
+
+.form-inner input:focus-visible {
+	outline: none;
+}
+
+#categorie {
+	border-radius: 8px 0px 0px 8px;
+	padding: 10px 15px;
+	font-size: 1rem;
+	border: 1px solid rgb(243, 243, 243);
+}
+
+#categorie:focus-visible {
+	outline: none;
+}
+
+.form-inner input[type="text"] {
+	flex: 1 1 100%;
+}
+.form-inner input[type="date"] {
+	border-radius: 0px;
+}
+.form-inner input[type="submit"] {
+	border-radius: 0px 8px 8px 0px;
+	cursor: pointer;	
+	background-image: linear-gradient(to right, #94FECB 50%, #94FECB 50%, #FF2299);
+	background-size: 200%;
+	background-position: 0%;
+	color: var(--dark);
+	font-weight: 600;
+	text-transform: uppercase;
+	transition: 0.4s;
+}
+
+.form-inner input[type="submit"]:hover {
+	background-position: 100%;
+	color: #FFF;
+}
+
+.income-list .income-item {
+	position: relative;
+	padding: 10px 15px;
+	background-color: rgb(0 123 255 / 5%);
+	border-radius: 8px;
+	margin-bottom: 15px;
+	display: flex;
+	transition: 0.4s;
+}
+
+.income-list .income-item .remove-item {
+	position: absolute;
+	width: 0px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+	cursor: pointer;
+	display: block;
+	color: #FFF;
+	font-weight: 600;
+	background-color: #FF2299;
+	border-radius: 8px 0px 0px 8px;
+	transition: 0.2s;
+}
+
+.remove-item {
+	padding: 0;
+	border: none;
+}
+
+.income-list .income-item:hover .remove-item {
+	width: 50px;
+}
+
+.income-list .income-item .desc {
+	flex: 1 1 100%;
+}
+
+.desc {
+	margin-left: 45px;
+}
+
+input#price {
+	overflow: hidden;
+}
+
+.income-list .income-item .price,
+.income-list .income-item .date {
+	min-width: 70px;
+}
+.income-list .income-item:hover {
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.1);
+}

@@ -33,7 +33,7 @@ const title = choseLocaleTitle('ua');
                 </NavDropdown>
                 </Nav>
                 <FormattedMessage id="greeting" defaultMessage="Hey, {name}" values={{name: "Helen"}} />
-                <Link className='mx-2' to='#'><Image src='./media/united-kingdom-en.png'></Image></Link>
+                <Image src='./media/united-kingdom-en.png'></Image>
             </Navbar.Collapse>
             </Navbar>
         </div>

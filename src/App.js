@@ -7,6 +7,7 @@ import NotFound from './components/NotFound';
 import Home from './components/Home';
 import React from 'react';
 import { Store } from './Store';
+import { useState, useEffect } from 'react';
 
 import {
   BrowserRouter,
@@ -26,7 +27,8 @@ function loadLocaleData(locale) {
 }
 
 function App() {
-
+  const [ income, setIncome ] = useState([]);
+  const [ totalIncome, setTotalIncome ] = useState(0);
   const locale = 'ua';
   const messages = loadLocaleData(locale);
   // let store = Store;
@@ -40,7 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element={<div className='container bg-white'>
               <LeftMenu />  
-              <Home />       
+              <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
             </div> 
           }>  
           </Route>

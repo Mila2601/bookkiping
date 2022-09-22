@@ -3,10 +3,19 @@
   background-repeat: repeat;
   background-size: 30%;
   background-color: #cccccc;
-  text-align: center;
+  min-height: 100vh;
 }
 
 .App .container {
   padding-right: 0px;
   padding-left: 0px;
+}
+
+.home {
+  min-height: 80vh;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
 }

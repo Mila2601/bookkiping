@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 function LeftMenu () {
     return <Nav defaultActiveKey="/home" className="flex-column left-menu">
-    <b className='mt-2'><FormattedMessage id="statistics" defaultMessage="Statistics" /></b>
+    <b className='mt-2 text-center'><FormattedMessage id="statistics" defaultMessage="Statistics" /></b>
     <NavDropdown.Divider />
     <ul>
     <li><Link className='nav-link' to="/day"><FormattedMessage id="day" defaultMessage="Day" /></Link></li>
