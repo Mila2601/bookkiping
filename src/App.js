@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 
 import {IntlProvider} from 'react-intl';
+import StartPage from './components/StartPage';
 
 function loadLocaleData(locale) {
   switch (locale) {
@@ -37,16 +38,18 @@ function App() {
   return (
     <IntlProvider locale={locale} messages={messages}>
     <div className="App">
-      <BrowserRouter>
-        <Header />
+      <BrowserRouter>        
         <Routes>
-          <Route path="/" element={<div className='container bg-white'>
+        <Route path="/" element={<StartPage />}/>       
+          <Route path="/main" element={<div className='container bg-white'>
+              <Header />
               <LeftMenu />  
               <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
             </div> 
           }>  
           </Route>
           <Route path="/day" element={<div className='container bg-white'>
+              <Header />
               <LeftMenu />  
               <Day />       
             </div> 

@@ -18,7 +18,6 @@ function LeftMenu () {
     <NavDropdown.Divider />
     <Link className='nav-link font-weight-bold mb-2' to="/edit-categories"><FormattedMessage id="editCategories" defaultMessage="Edit categories" /></Link>
   </Nav>
-
 }
 
 export default LeftMenu;
