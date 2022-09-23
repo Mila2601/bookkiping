@@ -4,8 +4,8 @@ import '../css/left-menu.css';
 import { FormattedMessage } from 'react-intl';
 
 function LeftMenu () {
-    return <Nav defaultActiveKey="/home" className="flex-column left-menu">
-    <b className='mt-2'><FormattedMessage id="statistics" defaultMessage="Statistics" /></b>
+    return <Nav defaultActiveKey="/main" className="flex-column left-menu">
+    <b className='mt-2 text-center'><FormattedMessage id="statistics" defaultMessage="Statistics" /></b>
     <NavDropdown.Divider />
     <ul>
     <li><Link className='nav-link' to="/day"><FormattedMessage id="day" defaultMessage="Day" /></Link></li>
@@ -18,7 +18,6 @@ function LeftMenu () {
     <NavDropdown.Divider />
     <Link className='nav-link font-weight-bold mb-2' to="/edit-categories"><FormattedMessage id="editCategories" defaultMessage="Edit categories" /></Link>
   </Nav>
-
 }
 
 export default LeftMenu;

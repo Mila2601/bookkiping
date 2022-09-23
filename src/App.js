@@ -7,6 +7,7 @@ import NotFound from './components/NotFound';
 import Home from './components/Home';
 import React from 'react';
 import { Store } from './Store';
+import { useState, useEffect } from 'react';
 
 import {
   BrowserRouter,
@@ -15,6 +16,7 @@ import {
 } from "react-router-dom";
 
 import {IntlProvider} from 'react-intl';
+import StartPage from './components/StartPage';
 
 function loadLocaleData(locale) {
   switch (locale) {
@@ -26,7 +28,8 @@ function loadLocaleData(locale) {
 }
 
 function App() {
-
+  const [ income, setIncome ] = useState([]);
+  const [ totalIncome, setTotalIncome ] = useState(0);
   const locale = 'ua';
   const messages = loadLocaleData(locale);
   // let store = Store;
@@ -35,16 +38,18 @@ function App() {
   return (
     <IntlProvider locale={locale} messages={messages}>
     <div className="App">
-      <BrowserRouter>
-        <Header />
+      <BrowserRouter>        
         <Routes>
-          <Route path="/" element={<div className='container bg-white'>
+        <Route path="/" element={<StartPage />}/>       
+          <Route path="/main" element={<div className='container bg-white'>
+              <Header />
               <LeftMenu />  
-              <Home />       
+              <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
             </div> 
           }>  
           </Route>
           <Route path="/day" element={<div className='container bg-white'>
+              <Header />
               <LeftMenu />  
               <Day />       
             </div> 
