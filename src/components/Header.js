@@ -32,9 +32,11 @@ const title = choseLocaleTitle('ua');
                     <Link className='dropdown-item' to="/categories"><FormattedMessage id="categories" defaultMessage="Categories" /></Link>
                 </NavDropdown>
                 </Nav>
-                <FormattedMessage id="greeting" defaultMessage="Hey, {name}" values={{name: "Helen"}} />
-                <Image src='./media/united-kingdom-en.png'></Image>
             </Navbar.Collapse>
+            <div className='languages'>
+              <FormattedMessage id="greeting" defaultMessage="Hey, {name}" values={{name: "Helen"}} />
+              <Image className="ml-2" src='./media/united-kingdom-en.png'></Image>
+            </div>
             </Navbar>
         </div>
     </div>

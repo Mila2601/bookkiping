@@ -13,7 +13,7 @@ function Home ({totalIncome, setTotalIncome, income, setIncome}) {
         setTotalIncome(temp);
     }, [income])
 
-    return <div className='home d-inline-block'>
+    return <div className='home d-inline-block text-center'>
         <h1><FormattedMessage
           id="addIncomeHere"
           defaultMessage="Add income / bill here:" /></h1>
@@ -21,7 +21,7 @@ function Home ({totalIncome, setTotalIncome, income, setIncome}) {
         <div><FormattedNumber value={19} style="currency" currency="UAH" /></div>
         <IncomeForm income={income} setIncome={setIncome} />
         <IncomeList income={income} setIncome={setIncome} />
-        <div className='total-income text-right'>Total: ${totalIncome}</div>
+        <div className='total-income text-right p-2'>Total: ${totalIncome}</div>
     </div>
 }
  export default Home;

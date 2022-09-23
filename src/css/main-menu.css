@@ -1,0 +1,16 @@
+@media screen and (max-width: 600px) {
+    .languages {
+        position: absolute;
+        top: 15px;
+        right:10px;
+    }   
+
+    .navbar a {
+        margin-bottom: 10px;
+    }
+
+    .dropdown-menu.show {
+        background: none;
+        border: none;
+    }
+}

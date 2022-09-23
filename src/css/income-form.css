@@ -35,6 +35,12 @@
 @media screen and (max-width: 920px) {
 	.form-inner {
 		flex-direction: column;
+	}	
+	select#categorie {
+		border-radius: .5rem .5rem 0 0;
+	}
+	.income-form .form-inner input[type="submit"] {
+		border-radius: 0 0 .5rem .5rem;
 	}
 }
 
@@ -118,11 +124,11 @@
 	width: 50px;
 }
 
-.income-list .income-item .desc {
+.income-list .income-item .desc, .category {
 	flex: 1 1 100%;
 }
 
-.desc {
+.category {
 	margin-left: 45px;
 }
 

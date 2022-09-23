@@ -19,8 +19,10 @@ function IncomeForm({income, setIncome}) {
       "date": newDate.getTime()
     }]);
 
+    console.log(categorie.current.value);
+
     desc.current.value = "";
-    categorie.current.value = "";
+    categorie.current.value = "no category";
     price.current.value = null;
     date.current.value = null;
   }
@@ -29,7 +31,7 @@ function IncomeForm({income, setIncome}) {
     <form className='income-form' onSubmit={AddIncome}>
         <div className='form-inner'>
         <select className="brands-select" name="categorie" id="categorie" ref={categorie}>
-        <option value="">Choose category</option>
+        <option value="no category">Choose category</option>
         </select>
         <input type="text" name="desc" id="desc" placeholder='Income Description...' ref={desc} />
         <input type="number" name="price" id="price" placeholder="Price..." ref={price} />

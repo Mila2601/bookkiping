@@ -12,7 +12,7 @@ const sortByDate = (a, b) => {
     return a.date - b.date;
 }
   return (
-    <div className='income-list'>
+    <div className='income-list p-2'>
       <div>{income.sort(sortByDate).map( (value, index) => (
         <IncomeItem 
             key={index} 
