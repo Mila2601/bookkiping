@@ -7,6 +7,8 @@ import NotFound from './components/NotFound';
 import Home from './components/Home';
 import React, { useContext } from 'react';
 import { useState } from 'react';
+import Ukrainian from './components/lang/ua.json';
+import English from './components/lang/en.json';
 
 import {
   BrowserRouter,
@@ -19,23 +21,23 @@ import StartPage from './components/StartPage';
 import Planing from './components/Planing';
 import { BillContext } from './context/BillContext';
 
-function loadLocaleData(locale) {
-  switch (locale) {
-    case 'ua':
-      return require('./components/lang/ua.json')
-    default:
-      return require('./components/lang/en.json')
-  }
-}
-
 function App() {
   const [ income, setIncome ] = useState([]);
   const [ totalIncome, setTotalIncome ] = useState(0);
   const { userLocale } = useContext(BillContext);
-  const messages = loadLocaleData(userLocale);
+
+  const locale = userLocale || navigator.language;
+
+let lang;
+
+if (locale==="en-US") {
+   lang = English;
+} else if (locale === "uk-UA") {
+   lang = Ukrainian;
+}
 
   return (
-      <IntlProvider locale={userLocale} messages={messages} defaultLocale="en-US">
+      <IntlProvider locale={userLocale || locale} messages={lang} defaultLocale="en-US">
         <div className="App">
           <BrowserRouter>        
             <Routes>

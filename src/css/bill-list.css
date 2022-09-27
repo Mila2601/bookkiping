@@ -42,7 +42,7 @@
 }
 
 .selected-interval {
-    color: gold;
+    color: #FF2299;
     font-weight: 700;
     display: inline-block;
     cursor: pointer;
@@ -56,8 +56,40 @@
     cursor: pointer;
 }
 
-.delete-btn:hover {
-    color: red;
+.edit-mode-btn, .add-bill-container button[type='submit'] {
+    cursor: pointer;
+    width: fit-content;
+    background-image: linear-gradient(to right, #94FECB 50%, #94FECB 50%, #FF2299);
+	background-size: 200%;
+    border-radius: .5rem;
+    padding: 10px 15px;
+    border: none;
+    transition: 0.4s;
+}
+
+.edit-mode-btn:hover, .add-bill-container button[type='submit']:hover {
+    background-position: 100%;
+	color: #FFF;
+}
+
+.add-bill-container .brands-select {
+    width: 100%;
+    border-radius: .3rem;
+}
+
+.add-bill-container button[type='submit'] {
+    width: 350px;
+    text-align: center;
+}
+
+.edit-mode-btn.edit {
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.delete-btn:hover, .edit-mode-btn:hover {
+    background-position: 100%;
+    color: white;
 }
 
 .edit-bill-title {
@@ -68,4 +100,11 @@
 .edit-bill-cost-input {
     width: 200px;
     display: inline-block;
+}
+
+.bill-total-container,
+.total-saved-container {
+    width: 350px;
+    display: block;
+    margin: auto;
 }

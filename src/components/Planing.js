@@ -12,7 +12,7 @@ function Planing() {
   return (
     <div>
       {
-        editModeEnabled ? <EditBills /> : <span><BillOptions /><AddBill /><BillTotal /><BillList /></span>
+        editModeEnabled ? <EditBills /> : <span><BillOptions /><AddBill /><BillList /><BillTotal /></span>
       }
     </div>
   )

@@ -28,8 +28,8 @@ const { setUserLocale, menuTitle } = useContext(BillContext);
             </Navbar.Collapse>
             <div className='languages'>
               <FormattedMessage id="greeting" defaultMessage="Hey, {name}" values={{name: "Helen"}} />
-              <Image onClick={() => {setUserLocale('en'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 en" src='./media/united-kingdom-en.png'></Image>
-              <Image onClick={() => {setUserLocale('ua'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 ua d-none" src='./media/ukraine.jpg'></Image>
+              <Image onClick={() => {setUserLocale('en-US'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 en" src='./media/united-kingdom-en.png'></Image>
+              <Image onClick={() => {setUserLocale('uk-UA'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 ua d-none" src='./media/ukraine.jpg'></Image>
             </div>
             </Navbar>
         </div>

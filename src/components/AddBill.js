@@ -24,7 +24,7 @@ function AddBill() {
 
   return (
     <div className='add-bill-container'>
-      <select className="brands-select" name="categorie" id="categorie">
+      <select className="brands-select mb-2 form-control" name="categorie" id="categorie">
         <option value="no category"><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
       </select>
       <input className='form-control add-bill-form-control'

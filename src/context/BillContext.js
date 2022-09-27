@@ -7,28 +7,40 @@ const BillProvider = ({children}) => {
   const [bills, setBills] = useState([]);
   const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
   const [editModeEnabled, setEditModeEnabled] = useState(false);
-  const [userLocale, setUserLocale] = useState('ua');
+  const [userLocale, setUserLocale] = useState('uk-UA');
   const [phbill, setPhbill] = useState('Add notes');
   const [phcost, setPhcost] = useState('Enter bill monthly cost');
-  const [rate, setRate] = useState('$');
   const [menuTitle, setMenuTitle] = useState('Statistics');
+  const [descr, setDescr] = useState('Income Description');
+  const [pr, setPr] = useState('Price');
+  const [addInc, setAddInc] = useState('Add income');
+
+
 
   function choseLocale(locale) {
     switch (locale) {
-      case 'ua':
-        { setPhbill('Додайте нотатки'); 
-          setPhcost('Додайте суму щомісячного платежу'); 
-          setRate('грн'); 
-          setMenuTitle('Статистика') }
+      case 'uk-UA':
+        { setPhbill('Додайте подробиці'); 
+          setPhcost('Введіть суму щомісячного платежу '); 
+          setMenuTitle('Статистика');
+          setDescr('Нотатки');
+          setPr('Ціна');
+          setAddInc('Додати платіж');
+          break
+        }
       default:
         { setPhbill('Add notes'); 
           setPhcost('Enter bill monthly cost'); 
-          setRate('$'); 
-          setMenuTitle('Statistics') } 
+          setMenuTitle('Statistics');
+          setDescr('Income Description');
+          setPr('Price');
+          setAddInc('Add income');
+          break
+        } 
     };
   }
 
-  useEffect(() => choseLocale(userLocale), [setUserLocale])
+  useEffect(() => choseLocale(userLocale), [userLocale, setUserLocale]);
 
   useEffect( () => {
     setBills(JSON.parse(localStorage.getItem('bills')) || [])
@@ -75,10 +87,12 @@ const BillProvider = ({children}) => {
       deleteBill,
       userLocale, 
       setUserLocale,
-      rate,
       menuTitle, 
       phbill,
-      phcost
+      phcost,
+      pr,
+      descr,
+      addInc
     }}>
       {children}
     </BillContext.Provider>

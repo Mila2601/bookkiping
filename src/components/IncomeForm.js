@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
-import '../css/income-form.css'
+import React, { useContext, useRef } from 'react';
+import '../css/income-form.css';
+import { FormattedMessage } from 'react-intl';
+import { BillContext } from '../context/BillContext';
 
 function IncomeForm({income, setIncome}) {
   const desc = useRef(null);
@@ -26,17 +28,19 @@ function IncomeForm({income, setIncome}) {
     price.current.value = null;
     date.current.value = null;
   }
+  
+  const { pr, addInc, descr } = useContext(BillContext);
 
   return (
     <form className='income-form' onSubmit={AddIncome}>
         <div className='form-inner'>
         <select className="brands-select" name="categorie" id="categorie" ref={categorie}>
-        <option value="no category">Choose category</option>
+        <option value="no category"><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
         </select>
-        <input type="text" name="desc" id="desc" placeholder='Income Description...' ref={desc} />
-        <input type="number" name="price" id="price" placeholder="Price..." ref={price} />
+        <input type="text" name="desc" id="desc" placeholder={descr} ref={desc} />
+        <input type="number" name="price" id="price" placeholder={pr} ref={price} />
         <input type="date" name="date" id='date' placeholder='Income Date...' ref={date} />
-        <input type="submit" value="Add Income" />
+        <input type="submit" value={addInc} />
         </div>      
     </form>
   )

@@ -1,12 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
-import { BillContext } from '../context/BillContext';
 import IncomeForm from './IncomeForm';
 import IncomeList from './IncomeList';
 
 function Home ({totalIncome, setTotalIncome, income, setIncome}) {
-
-    const { rate } = useContext(BillContext);
 
     useEffect( () => {
         let temp = 0;
@@ -16,15 +13,15 @@ function Home ({totalIncome, setTotalIncome, income, setIncome}) {
         setTotalIncome(temp);
     }, [income])
 
-    return <div className='home d-inline-block text-center'>
+    return <div className='home d-inline-block text-center mt-4'>
         <h1><FormattedMessage
           id="addIncomeHere"
           defaultMessage="Add income / bill here:" /></h1>
                 <br />
-        {/* <div><FormattedNumber value={19} style="currency" currency="UAH" /></div> */}
         <IncomeForm income={income} setIncome={setIncome} />
         <IncomeList income={income} setIncome={setIncome} />
-        <div className='total-income text-right p-2'>Total: {totalIncome} {rate}</div>
+        <div className='total-income text-right p-2'><FormattedMessage
+          id="total" defaultMessage="Total: " /><FormattedNumber value={totalIncome} style="currency" currency="UAH" /></div>
     </div>
 }
  export default Home;

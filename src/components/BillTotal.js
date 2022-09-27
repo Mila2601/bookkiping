@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
-import { BillContext } from '../context/BillContext'
+import React, { useContext } from 'react';
+import { BillContext } from '../context/BillContext';
+import { FormattedNumber, FormattedMessage } from 'react-intl';
 
 const BillTotal = () => {
 
@@ -21,19 +22,18 @@ const BillTotal = () => {
 
   return (<>
     <div className='bill-total-container'>
-        {selectedCostInterval} bill cost: <span className='total-cost'>{
-            '$' + bills.reduce( (acc, value) => {
+        <FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="billCost" defaultMessage="bill cost: " /><span className='total-cost'>{
+            <FormattedNumber value={bills.reduce( (acc, value) => {
                 return value.enabled ? acc + moneyIntervalTransform(value.monthlyCost) : acc
-            }, 0).toFixed(2)
+            }, 0).toFixed(2)} style="currency" currency="UAH" />
             }</span>
       
     </div>
-    <div className='total-saved-container'>{selectedCostInterval} saved
-        <span className='total-saved'>
+    <div className='total-saved-container'><FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="saved" defaultMessage=" saved: " /><span className='total-saved'> 
         {
-            ' $' + bills.reduce( (acc, value) => {
+            <FormattedNumber value={bills.reduce( (acc, value) => {
                 return !value.enabled ? acc + moneyIntervalTransform(value.monthlyCost) : acc
-            }, 0).toFixed(2)
+            }, 0).toFixed(2)} style="currency" currency="UAH" />
         }   
         </span>
     </div>

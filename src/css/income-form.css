@@ -2,6 +2,7 @@
 	display: inline-block;
 	margin: 15px 0;
 	position: relative;
+	width: 100%;
 }
 
 .income-form:after {
