@@ -5,9 +5,8 @@ import Day from './components/Day';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
-import React from 'react';
-import { Store } from './Store';
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { useState } from 'react';
 
 import {
   BrowserRouter,
@@ -17,6 +16,8 @@ import {
 
 import {IntlProvider} from 'react-intl';
 import StartPage from './components/StartPage';
+import Planing from './components/Planing';
+import { BillContext } from './context/BillContext';
 
 function loadLocaleData(locale) {
   switch (locale) {
@@ -30,37 +31,41 @@ function loadLocaleData(locale) {
 function App() {
   const [ income, setIncome ] = useState([]);
   const [ totalIncome, setTotalIncome ] = useState(0);
-  const locale = 'ua';
-  const messages = loadLocaleData(locale);
-  // let store = Store;
-  // console.log(`store is ${store}`);
+  const { userLocale } = useContext(BillContext);
+  const messages = loadLocaleData(userLocale);
 
   return (
-    <IntlProvider locale={locale} messages={messages}>
-    <div className="App">
-      <BrowserRouter>        
-        <Routes>
-        <Route path="/" element={<StartPage />}/>       
-          <Route path="/main" element={<div className='container bg-white'>
-              <Header />
-              <LeftMenu />  
-              <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
-            </div> 
-          }>  
-          </Route>
-          <Route path="/day" element={<div className='container bg-white'>
-              <Header />
-              <LeftMenu />  
-              <Day />       
-            </div> 
-          }>  
-          </Route> 
-          <Route path="*" element={<NotFound />}/>       
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </div>
-    </IntlProvider>
+      <IntlProvider locale={userLocale} messages={messages} defaultLocale="en-US">
+        <div className="App">
+          <BrowserRouter>        
+            <Routes>
+            <Route path="/" element={<StartPage />}/>       
+              <Route path="/main" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
+                </div> 
+              }>  
+              </Route>
+              <Route path="/day" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <Day />       
+                </div> 
+              }>  
+              </Route> 
+              <Route path="/plan-bills" element={
+                <div className='container bg-white p-3'>
+                  <Header />
+                  <Planing />
+                </div>
+              }/>       
+              <Route path="*" element={<NotFound />}/>       
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </div>
+      </IntlProvider>
   );
 }
 

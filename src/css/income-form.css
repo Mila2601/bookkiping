@@ -44,25 +44,25 @@
 	}
 }
 
-.form-inner input {
+input {
 	font-size: 1rem;
 	padding: 10px 15px;
 	background-color: #FFF;
 	border: 1px solid rgb(243, 243, 243);
 }
 
-.form-inner input:focus-visible {
+input:focus-visible {
 	outline: none;
 }
 
-#categorie {
+.brands-select {
 	border-radius: 8px 0px 0px 8px;
 	padding: 10px 15px;
 	font-size: 1rem;
 	border: 1px solid rgb(243, 243, 243);
 }
 
-#categorie:focus-visible {
+.brands-select:focus-visible {
 	outline: none;
 }
 
@@ -72,7 +72,8 @@
 .form-inner input[type="date"] {
 	border-radius: 0px;
 }
-.form-inner input[type="submit"] {
+
+input[type="submit"] {
 	border-radius: 0px 8px 8px 0px;
 	cursor: pointer;	
 	background-image: linear-gradient(to right, #94FECB 50%, #94FECB 50%, #FF2299);
@@ -84,7 +85,7 @@
 	transition: 0.4s;
 }
 
-.form-inner input[type="submit"]:hover {
+input[type="submit"]:hover {
 	background-position: 100%;
 	color: #FFF;
 }

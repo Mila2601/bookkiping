@@ -27,3 +27,7 @@ a.nav-link {
 ul a.nav-link {
     padding-left: 0px;
 }
+
+.right-navbar.navbar {
+    padding: 0;
+}
