@@ -1,25 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { BillContext } from '../context/BillContext';
 
-function IncomeItem({ income, index, removeIncome }) {
-    let date = new Date(income.date);
+
+function IncomeItem({bill}) {
+
+    const {deleteBill} = useContext(BillContext);
+
+    let date = new Date(bill.date);
     let day = () => {
         return date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     }
     let month = () => {
-        return date.getMonth() < 10 ? "0" + (date.getMonth()-1) : date.getMonth() - 1;
+        return date.getMonth() < 10 ? "0" + (date.getMonth() - 1) : date.getMonth() - 1;
     };
     let year = date.getFullYear();
-
-    const removeHandle = i => {
-        removeIncome(i);
-    }
-
-  return (
+    
+return (
     <div className='income-item'>
-        <button className='remove-item' onClick={ () => removeHandle(index)}>x</button>  
-        <div className='category'>{income.categorie}</div>
-        <div className='desc'>{income.desc}</div>   
-        <div className='price'>${income.price}</div> 
+        <button className='remove-item' onClick={ () => deleteBill(bill)}>x</button>  
+        <div className='category'>{bill.category}</div>
+        <div className='desc'>{bill.title}</div>   
+        <div className='price'>${bill.price}</div> 
         <div className='date'>{day() + "." + month() + "." + year}</div>
     </div>
   )

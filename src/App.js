@@ -22,10 +22,7 @@ import Planing from './components/Planing';
 import { BillContext } from './context/BillContext';
 
 function App() {
-  const [ income, setIncome ] = useState([]);
-  const [ totalIncome, setTotalIncome ] = useState(0);
   const { userLocale } = useContext(BillContext);
-
   const locale = userLocale || navigator.language;
 
 let lang;
@@ -45,7 +42,7 @@ if (locale==="en-US") {
               <Route path="/main" element={<div className='container bg-white'>
                   <Header />
                   <LeftMenu />  
-                  <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
+                  <Home />       
                 </div> 
               }>  
               </Route>

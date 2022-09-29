@@ -9,17 +9,18 @@ const EditBills = () => {
   return (
     <div className='edit-bill-container mt-3'>
         {
-            bills.map( (bill, billIndex) => {
+            bills.filter( bill => bill.isPlaned === true).map( (bill, billIndex) => {
                 return (
                     <div key={billIndex} className='edit-bill-row'>
                         <div className='edit-bill-row-content'>
                             <div className='edit-bill-title'>
                                 {bill.title}
                             </div>
-                            <input className='edit-bill-cost-input' type='number' value={bill.monthlyCost} onChange={ e => editBill({
+                            <input className='edit-bill-cost-input' type='number' value={bill.price} onChange={ e => editBill({
                                 title: bill.title,
                                 enabled: bill.enabled,
-                                monthlyCost: e.target.value
+                                price: e.target.value,
+                                isPlaned: true
                             })}></input> 
                             <h6 onClick={ () => deleteBill(bill)} className="delete-btn"><FormattedMessage id="delete" defoltMessage='DELETE' /></h6>
                         </div>

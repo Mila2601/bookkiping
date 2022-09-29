@@ -14,6 +14,8 @@ const BillProvider = ({children}) => {
   const [descr, setDescr] = useState('Income Description');
   const [pr, setPr] = useState('Price');
   const [addInc, setAddInc] = useState('Add income');
+  const [noCat, setNoCat] = useState('No category');
+  const [totalIncome, setTotalIncome] = useState(0);
 
 
 
@@ -26,6 +28,7 @@ const BillProvider = ({children}) => {
           setDescr('Нотатки');
           setPr('Ціна');
           setAddInc('Додати платіж');
+          setNoCat('Без категорії');
           break
         }
       default:
@@ -35,6 +38,7 @@ const BillProvider = ({children}) => {
           setDescr('Income Description');
           setPr('Price');
           setAddInc('Add income');
+          setNoCat('No category');
           break
         } 
     };
@@ -70,6 +74,7 @@ const BillProvider = ({children}) => {
   }
 
   const deleteBill = (billToDelete) => {
+    console.log(billToDelete);
     const updatedBills = bills.filter(bill => bill.title !== billToDelete.title);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
@@ -87,12 +92,16 @@ const BillProvider = ({children}) => {
       deleteBill,
       userLocale, 
       setUserLocale,
+      totalIncome, 
+      setTotalIncome,
+      setBills,
       menuTitle, 
       phbill,
       phcost,
       pr,
       descr,
-      addInc
+      addInc,
+      noCat
     }}>
       {children}
     </BillContext.Provider>

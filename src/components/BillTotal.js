@@ -24,7 +24,7 @@ const BillTotal = () => {
     <div className='bill-total-container'>
         <FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="billCost" defaultMessage="bill cost: " /><span className='total-cost'>{
             <FormattedNumber value={bills.reduce( (acc, value) => {
-                return value.enabled ? acc + moneyIntervalTransform(value.monthlyCost) : acc
+                return value.enabled ? acc + moneyIntervalTransform(value.price) : acc
             }, 0).toFixed(2)} style="currency" currency="UAH" />
             }</span>
       
@@ -32,7 +32,7 @@ const BillTotal = () => {
     <div className='total-saved-container'><FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="saved" defaultMessage=" saved: " /><span className='total-saved'> 
         {
             <FormattedNumber value={bills.reduce( (acc, value) => {
-                return !value.enabled ? acc + moneyIntervalTransform(value.monthlyCost) : acc
+                return !value.enabled ? acc + moneyIntervalTransform(value.price) : acc
             }, 0).toFixed(2)} style="currency" currency="UAH" />
         }   
         </span>

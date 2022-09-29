@@ -1,24 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { BillContext } from '../context/BillContext';
 import IncomeItem from './IncomeItem';
 
-function IncomeList( { income, setIncome }) {
+function IncomeList() {
 
-    const removeIncome = i => {
-        let temp = income.filter( (v, index ) => index != i);
-        setIncome(temp);
-    }
+  const { bills, deleteBill } = useContext(BillContext);
 
 const sortByDate = (a, b) => {
     return a.date - b.date;
 }
   return (
     <div className='income-list p-2'>
-      <div>{income.sort(sortByDate).map( (value, index) => (
+      <div>{bills.filter((el) => el.isPlaned === false ).sort(sortByDate).map( (bill, index) => (
         <IncomeItem 
             key={index} 
-            income={value} 
-            index={index} 
-            removeIncome={removeIncome} />
+            bill={bill} 
+        />
       ))}</div>
     </div>
   )

@@ -7,25 +7,25 @@ import { FormattedMessage } from 'react-intl';
 function AddBill() {
 
   const [newBillTitle, setNewBillTitle] = useState('');
-  const [newBillCost, setNewBillCost] = useState('');
+  const [price, setPrice] = useState('');
 
   const billObjectValid = () => {
-    const costValid = newBillCost && Number.parseFloat(newBillCost);
+    const costValid = price && Number.parseFloat(price);
     const titleValid = newBillTitle && newBillTitle.split('').find( char => char !== " ");
     return titleValid && costValid;
   }
 
   const clearForm = () => {
     setNewBillTitle('');
-    setNewBillCost('');
+    setPrice('');
   }
 
-  const { updateBills, phbill, phcost } = useContext(BillContext);
+  const { updateBills, phbill, phcost, noCat } = useContext(BillContext);
 
   return (
     <div className='add-bill-container'>
-      <select className="brands-select mb-2 form-control" name="categorie" id="categorie">
-        <option value="no category"><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
+      <select className="brands-select mb-2 form-control" name="category" id="category">
+        <option value={noCat}><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
       </select>
       <input className='form-control add-bill-form-control'
              type='text'
@@ -35,16 +35,18 @@ function AddBill() {
       <input className='form-control add-cost-form-control'
              type='number'
              placeholder={phcost}
-             value={newBillCost}
-             onChange={ e => setNewBillCost(e.currentTarget.value) } />  
+             value={price}
+             onChange={ e => setPrice(e.currentTarget.value) } />  
       <button type="submit" value="Add Bill" onClick={
         () => {
           if (billObjectValid()) {
             updateBills({
               title: newBillTitle,
-              monthlyCost: newBillCost,
+              price: price,
               category: '',
-              enabled: true
+              enabled: true,
+              isPlaned: true,
+              date: new Date().getTime()
             });
             clearForm();
           }

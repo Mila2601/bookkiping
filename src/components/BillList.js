@@ -10,16 +10,19 @@ function BillList() {
   return (<>
   <div className='bill-list-container mt-3'>
     {
-      bills.map( (bill, index ) => {
+      bills.filter(bill => bill.isPlaned === true).map( (bill, index ) => {
         return (
           <div key={index} className='bill-list-row'>
             <input type="checkbox" className="form-check-input" checked={bill.enabled} onChange={() => editBill({
               title: bill.title,
-              monthlyCost: bill.monthlyCost,
-              enabled: !bill.enabled
+              price: bill.price,
+              enabled: !bill.enabled,
+              isPlaned: bill.isPlaned,
+              date: bill.date,
+              category: bill.category
             })}></input>
             <div className='bill-list-row-content'>
-              {bill.title} - <FormattedNumber value={bill.monthlyCost} style="currency" currency="UAH" />
+              {bill.title} - <FormattedNumber value={bill.price} style="currency" currency="UAH" />
             </div>
           </div>
         )
