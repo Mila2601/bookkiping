@@ -16,8 +16,8 @@ const BillProvider = ({children}) => {
   const [addInc, setAddInc] = useState('Add income');
   const [noCat, setNoCat] = useState('No category');
   const [totalIncome, setTotalIncome] = useState(0);
-
-
+  const [categories, setCategories] = useState([]);
+  const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
 
   function choseLocale(locale) {
     switch (locale) {
@@ -29,6 +29,7 @@ const BillProvider = ({children}) => {
           setPr('Ціна');
           setAddInc('Додати платіж');
           setNoCat('Без категорії');
+          setAlreadyHaveCat('Така категорія вже існує');
           break
         }
       default:
@@ -39,6 +40,7 @@ const BillProvider = ({children}) => {
           setPr('Price');
           setAddInc('Add income');
           setNoCat('No category');
+          setAlreadyHaveCat('You already have that category');
           break
         } 
     };
@@ -50,6 +52,10 @@ const BillProvider = ({children}) => {
     setBills(JSON.parse(localStorage.getItem('bills')) || [])
   }, [setBills])
 
+  useEffect( () => {
+    setCategories(JSON.parse(localStorage.getItem('categories')) || [])
+  }, [setCategories])
+
   const updateBills = (bill) => {
     const updatedBills = alfabeticalOrder([
       ...bills,
@@ -57,6 +63,12 @@ const BillProvider = ({children}) => {
     ]);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
+  }
+
+  const updateCategories = (category) => {
+    const updatedCategories = [...categories, category];
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+    setCategories(updatedCategories);
   }
 
   const alfabeticalOrder = bills => bills.sort( (a, b) => {
@@ -74,34 +86,46 @@ const BillProvider = ({children}) => {
   }
 
   const deleteBill = (billToDelete) => {
-    console.log(billToDelete);
     const updatedBills = bills.filter(bill => bill.title !== billToDelete.title);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
 
+  const deleteCategory = (category) => {
+    const updatedCategories = categories.filter(cat => cat !== category);
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+    setCategories(updatedCategories);
+  }
+
+  const renderSelect = () => {
+    let htmlStr = `<option value="">${noCat}</option>`;
+    htmlStr += categories.map(category => (`<option value="${category}">${category}</option>`)).join('');
+    let selectElement = document.querySelector('select');
+    if (selectElement) {selectElement.innerHTML = htmlStr};
+  }
+
   return(
     <BillContext.Provider value={{
-      bills,
+      bills, setBills,
+      selectedCostInterval, setselectedCostInterval,
+      editModeEnabled, setEditModeEnabled,
+      userLocale, setUserLocale,      
+      totalIncome, setTotalIncome,  
+      categories, setCategories, 
       updateBills,
-      editBill,
-      selectedCostInterval,
-      setselectedCostInterval,
-      setEditModeEnabled,
-      editModeEnabled,
-      deleteBill,
-      userLocale, 
-      setUserLocale,
-      totalIncome, 
-      setTotalIncome,
-      setBills,
-      menuTitle, 
+      editBill,      
+      deleteBill, 
+      deleteCategory, 
+      updateCategories,
+      renderSelect,        
+      menuTitle,
       phbill,
       phcost,
       pr,
       descr,
       addInc,
-      noCat
+      noCat,
+      alreadyHaveCat
     }}>
       {children}
     </BillContext.Provider>

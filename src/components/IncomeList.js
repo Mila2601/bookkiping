@@ -4,7 +4,7 @@ import IncomeItem from './IncomeItem';
 
 function IncomeList() {
 
-  const { bills, deleteBill } = useContext(BillContext);
+  const { bills } = useContext(BillContext);
 
 const sortByDate = (a, b) => {
     return a.date - b.date;

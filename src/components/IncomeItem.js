@@ -11,7 +11,7 @@ function IncomeItem({bill}) {
         return date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     }
     let month = () => {
-        return date.getMonth() < 10 ? "0" + (date.getMonth() - 1) : date.getMonth() - 1;
+        return date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth() - 1;
     };
     let year = date.getFullYear();
     
@@ -20,7 +20,7 @@ return (
         <button className='remove-item' onClick={ () => deleteBill(bill)}>x</button>  
         <div className='category'>{bill.category}</div>
         <div className='desc'>{bill.title}</div>   
-        <div className='price'>${bill.price}</div> 
+        <div className='price'>{bill.price} грн</div> 
         <div className='date'>{day() + "." + month() + "." + year}</div>
     </div>
   )

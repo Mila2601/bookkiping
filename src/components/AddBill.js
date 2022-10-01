@@ -11,7 +11,7 @@ function AddBill() {
 
   const billObjectValid = () => {
     const costValid = price && Number.parseFloat(price);
-    const titleValid = newBillTitle && newBillTitle.split('').find( char => char !== " ");
+    const titleValid = newBillTitle && newBillTitle.split(' ').join('') !== "";
     return titleValid && costValid;
   }
 
@@ -20,12 +20,10 @@ function AddBill() {
     setPrice('');
   }
 
-  const { updateBills, phbill, phcost, noCat } = useContext(BillContext);
-
+  const { updateBills, phbill, phcost } = useContext(BillContext);
   return (
     <div className='add-bill-container'>
-      <select className="brands-select mb-2 form-control" name="category" id="category">
-        <option value={noCat}><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
+      <select className="select-planed-bills brands-select mb-2 form-control" name="category" id="category">
       </select>
       <input className='form-control add-bill-form-control'
              type='text'
@@ -43,7 +41,7 @@ function AddBill() {
             updateBills({
               title: newBillTitle,
               price: price,
-              category: '',
+              category: document.querySelector('.select-planed-bills').value,
               enabled: true,
               isPlaned: true,
               date: new Date().getTime()

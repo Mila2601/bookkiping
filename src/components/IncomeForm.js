@@ -1,12 +1,11 @@
 import React, { useContext, useRef } from 'react';
 import '../css/income-form.css';
-import { FormattedMessage } from 'react-intl';
 import { BillContext } from '../context/BillContext';
 
 
 function IncomeForm() {
 
-  const { pr, addInc, descr, noCat, bills, updateBills } = useContext(BillContext);
+  const { pr, addInc, descr, noCat, renderSelect, updateBills } = useContext(BillContext);
 
   const title = useRef(null);
   const date = useRef(null);
@@ -21,7 +20,7 @@ function IncomeForm() {
     updateBills({
       title: title.current.value,
       price: price.current.value,
-      category: '',
+      category: category.current.value,
       enabled: true,
       isPlaned: false,
       date: newDate.getTime()
@@ -33,11 +32,12 @@ function IncomeForm() {
     date.current.value = null;
   }
 
+  renderSelect();
+
   return (
-    <form className='income-form' onSubmit={AddIncome}>
+    <form className='income-form m-2' onSubmit={AddIncome}>
         <div className='form-inner'>
         <select className="brands-select" name="category" id="category" ref={category}>
-        <option value={noCat}><FormattedMessage id="chooseCategory" defaultMessage="Choose category" /></option>
         </select>
         <input type="text" name="title" id="desc" placeholder={descr} ref={title} />
         <input type="number" name="price" id="price" placeholder={pr} ref={price} />

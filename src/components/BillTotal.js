@@ -23,15 +23,15 @@ const BillTotal = () => {
   return (<>
     <div className='bill-total-container'>
         <FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="billCost" defaultMessage="bill cost: " /><span className='total-cost'>{
-            <FormattedNumber value={bills.reduce( (acc, value) => {
+            <FormattedNumber value={bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
                 return value.enabled ? acc + moneyIntervalTransform(value.price) : acc
             }, 0).toFixed(2)} style="currency" currency="UAH" />
             }</span>
       
     </div>
-    <div className='total-saved-container'><FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="saved" defaultMessage=" saved: " /><span className='total-saved'> 
+    <div className='total-saved-container pb-4'><FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="saved" defaultMessage=" saved: " /><span className='total-saved'> 
         {
-            <FormattedNumber value={bills.reduce( (acc, value) => {
+            <FormattedNumber value={bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
                 return !value.enabled ? acc + moneyIntervalTransform(value.price) : acc
             }, 0).toFixed(2)} style="currency" currency="UAH" />
         }   

@@ -8,7 +8,9 @@ import EditBills from './EditBills';
 
 function Planing() {
 
-  const { editModeEnabled } = useContext(BillContext);
+  const { editModeEnabled, renderSelect } = useContext(BillContext);
+  renderSelect();
+  
   return (
     <div>
       {

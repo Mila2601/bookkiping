@@ -7,7 +7,7 @@ const EditBills = () => {
     const { bills, setEditModeEnabled, editBill, deleteBill } = useContext(BillContext);
 
   return (
-    <div className='edit-bill-container mt-3'>
+    <div className='edit-bill-container mt-3 p-4'>
         {
             bills.filter( bill => bill.isPlaned === true).map( (bill, billIndex) => {
                 return (
@@ -20,9 +20,10 @@ const EditBills = () => {
                                 title: bill.title,
                                 enabled: bill.enabled,
                                 price: e.target.value,
-                                isPlaned: true
+                                isPlaned: true,
+                                category: bill.category
                             })}></input> 
-                            <h6 onClick={ () => deleteBill(bill)} className="delete-btn"><FormattedMessage id="delete" defoltMessage='DELETE' /></h6>
+                            <h6 onClick={ () => deleteBill(bill)} className="delete-btn"><FormattedMessage id="delete" defaultMessage='DELETE' /></h6>
                         </div>
                         <hr></hr>
                     </div>

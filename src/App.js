@@ -6,9 +6,9 @@ import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
 import React, { useContext } from 'react';
-import { useState } from 'react';
 import Ukrainian from './components/lang/ua.json';
 import English from './components/lang/en.json';
+import { useEffect } from 'react';
 
 import {
   BrowserRouter,
@@ -20,10 +20,16 @@ import {IntlProvider} from 'react-intl';
 import StartPage from './components/StartPage';
 import Planing from './components/Planing';
 import { BillContext } from './context/BillContext';
+import CategoryList from './components/CategoryList';
 
 function App() {
-  const { userLocale } = useContext(BillContext);
+  const { userLocale, setCategories, renderSelect } = useContext(BillContext);
   const locale = userLocale || navigator.language;
+
+  useEffect( () => {
+    setCategories(JSON.parse(localStorage.getItem('categories')) || [])
+    renderSelect();
+  }, [])
 
 let lang;
 
@@ -54,11 +60,17 @@ if (locale==="en-US") {
               }>  
               </Route> 
               <Route path="/plan-bills" element={
-                <div className='container bg-white p-3'>
+                <div className='container bg-white'>
                   <Header />
                   <Planing />
                 </div>
-              }/>       
+              }/>
+              <Route path="/edit-categories" element={
+                <div className='container bg-white'>
+                  <Header />
+                  <CategoryList />
+                </div>
+              }/>         
               <Route path="*" element={<NotFound />}/>       
             </Routes>
             <Footer />

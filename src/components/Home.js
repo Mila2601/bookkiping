@@ -10,13 +10,14 @@ function Home () {
 
     useEffect( () => {
         let temp = 0;
-        for ( let i = 0; i < bills.length; i++) {
-            temp += parseInt(bills[i].price);
+        let filteredBills = bills.filter(bill => bill.isPlaned === false);
+        for ( let i = 0; i < filteredBills.length; i++) {
+            temp += parseInt(filteredBills[i].price);
         }
         setTotalIncome(temp);
     }, [bills])
 
-    return <div className='home d-inline-block text-center mt-4'>
+    return <div className='home d-inline-block text-center mt-4 pb-4'>
         <h1><FormattedMessage
           id="addIncomeHere"
           defaultMessage="Add income / bill here:" /></h1>
