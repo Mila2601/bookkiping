@@ -1,0 +1,14 @@
+.category-list {
+    width: 350px;
+    margin: auto;
+    min-height: 70vh;
+}
+
+.category-list h1 {
+    font-size: 20px;
+    text-align: center;
+}
+
+.category-list .delete-btn:hover {
+    color: #FF2299;
+}

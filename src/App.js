@@ -5,9 +5,10 @@ import Day from './components/Day';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
-import React from 'react';
-import { Store } from './Store';
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import Ukrainian from './components/lang/ua.json';
+import English from './components/lang/en.json';
+import { useEffect } from 'react';
 
 import {
   BrowserRouter,
@@ -17,50 +18,65 @@ import {
 
 import {IntlProvider} from 'react-intl';
 import StartPage from './components/StartPage';
-
-function loadLocaleData(locale) {
-  switch (locale) {
-    case 'ua':
-      return require('./components/lang/ua.json')
-    default:
-      return require('./components/lang/en.json')
-  }
-}
+import Planing from './components/Planing';
+import { BillContext } from './context/BillContext';
+import CategoryList from './components/CategoryList';
 
 function App() {
-  const [ income, setIncome ] = useState([]);
-  const [ totalIncome, setTotalIncome ] = useState(0);
-  const locale = 'ua';
-  const messages = loadLocaleData(locale);
-  // let store = Store;
-  // console.log(`store is ${store}`);
+  const { userLocale, setCategories, renderSelect } = useContext(BillContext);
+  const locale = userLocale || navigator.language;
+
+  useEffect( () => {
+    setCategories(JSON.parse(localStorage.getItem('categories')) || [])
+    renderSelect();
+  }, [])
+
+let lang;
+
+if (locale==="en-US") {
+   lang = English;
+} else if (locale === "uk-UA") {
+   lang = Ukrainian;
+}
 
   return (
-    <IntlProvider locale={locale} messages={messages}>
-    <div className="App">
-      <BrowserRouter>        
-        <Routes>
-        <Route path="/" element={<StartPage />}/>       
-          <Route path="/main" element={<div className='container bg-white'>
-              <Header />
-              <LeftMenu />  
-              <Home totalIncome={totalIncome} income={income} setIncome={setIncome} setTotalIncome={setTotalIncome} />       
-            </div> 
-          }>  
-          </Route>
-          <Route path="/day" element={<div className='container bg-white'>
-              <Header />
-              <LeftMenu />  
-              <Day />       
-            </div> 
-          }>  
-          </Route> 
-          <Route path="*" element={<NotFound />}/>       
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </div>
-    </IntlProvider>
+      <IntlProvider locale={userLocale || locale} messages={lang} defaultLocale="en-US">
+        <div className="App">
+          <BrowserRouter>        
+            <Routes>
+            <Route path="/" element={<StartPage />}/>       
+              <Route path="/main" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <Home />       
+                </div> 
+              }>  
+              </Route>
+              <Route path="/day" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <Day />       
+                </div> 
+              }>  
+              </Route> 
+              <Route path="/plan-bills" element={
+                <div className='container bg-white'>
+                  <Header />
+                  <Planing />
+                </div>
+              }/>
+              <Route path="/edit-categories" element={
+                <div className='container bg-white'>
+                  <Header />
+                  <CategoryList />
+                </div>
+              }/>         
+              <Route path="*" element={<NotFound />}/>       
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </div>
+      </IntlProvider>
   );
 }
 

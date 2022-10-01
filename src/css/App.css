@@ -13,9 +13,16 @@
 
 .home {
   min-height: 80vh;
+  max-width: 920px;
 }
 
 .footer {
   text-align: center;
   padding: 20px;
+}
+
+@media screen and (max-width: 600px){
+  h1 {
+    font-size: smaller;
+  }
 }
