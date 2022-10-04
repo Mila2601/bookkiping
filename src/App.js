@@ -9,7 +9,9 @@ import React, { useContext } from 'react';
 import Ukrainian from './components/lang/ua.json';
 import English from './components/lang/en.json';
 import { useEffect } from 'react';
-
+import Year from './components/Year';
+import CatStatistics from './components/CatStatistics';
+import Test from './components/Test';
 import {
   BrowserRouter,
   Route,
@@ -21,6 +23,8 @@ import StartPage from './components/StartPage';
 import Planing from './components/Planing';
 import { BillContext } from './context/BillContext';
 import CategoryList from './components/CategoryList';
+import Registration from './components/Registration';
+import Month from './components/Month';
 
 function App() {
   const { userLocale, setCategories, renderSelect } = useContext(BillContext);
@@ -35,7 +39,7 @@ let lang;
 
 if (locale==="en-US") {
    lang = English;
-} else if (locale === "uk-UA") {
+  } else if (locale === "uk-UA") {
    lang = Ukrainian;
 }
 
@@ -44,7 +48,9 @@ if (locale==="en-US") {
         <div className="App">
           <BrowserRouter>        
             <Routes>
-            <Route path="/" element={<StartPage />}/>       
+            <Route path="/" element={<StartPage />}/> 
+            <Route path="/test" element={<Test />}/>             
+            <Route path="/registration" element={<Registration />}/>             
               <Route path="/main" element={<div className='container bg-white'>
                   <Header />
                   <LeftMenu />  
@@ -58,10 +64,31 @@ if (locale==="en-US") {
                   <Day />       
                 </div> 
               }>  
-              </Route> 
-              <Route path="/plan-bills" element={
-                <div className='container bg-white'>
+              </Route>
+              <Route path="/month" element={<div className='container bg-white'>
                   <Header />
+                  <LeftMenu />  
+                  <Month />       
+                </div> 
+              }>  
+              </Route> 
+              <Route path="/year" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <Year />       
+                </div> 
+              }>  
+              </Route> 
+              <Route path="/cat-stat" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
+                  <CatStatistics />       
+                </div> 
+              }>  
+              </Route> 
+              <Route path="/plan-bills" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />  
                   <Planing />
                 </div>
               }/>

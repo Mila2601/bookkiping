@@ -22,7 +22,7 @@ function BillList() {
               category: bill.category
             })}></input>
             <div className='bill-list-row-content'>
-              {bill.title} - <FormattedNumber value={bill.price} style="currency" currency="UAH" />
+              {bill.category}, {bill.title} - <FormattedNumber value={bill.price} style="currency" currency="UAH" />
             </div>
           </div>
         )

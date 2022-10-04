@@ -1,11 +1,11 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import '../css/income-form.css';
 import { BillContext } from '../context/BillContext';
 
 
 function IncomeForm() {
 
-  const { pr, addInc, descr, noCat, renderSelect, updateBills } = useContext(BillContext);
+  const { pr, addInc, descr, noCat, renderSelect, updateBills, categories, setCategories } = useContext(BillContext);
 
   const title = useRef(null);
   const date = useRef(null);
@@ -14,8 +14,7 @@ function IncomeForm() {
 
   const AddIncome = e => {
     e.preventDefault();
-    let enteredDate = date.current.value.split("-");
-    let newDate = new Date(enteredDate[0], enteredDate[1], enteredDate[2]);
+    let newDate = (new Date(date.current.value)).getTime();
 
     updateBills({
       title: title.current.value,
@@ -23,22 +22,22 @@ function IncomeForm() {
       category: category.current.value,
       enabled: true,
       isPlaned: false,
-      date: newDate.getTime()
+      date: newDate
     });
 
     title.current.value = "";
     category.current.value = {noCat};
     price.current.value = null;
     date.current.value = null;
-  }
-
+  }  
   renderSelect();
-
+  
   return (
     <form className='income-form m-2' onSubmit={AddIncome}>
         <div className='form-inner'>
         <select className="brands-select" name="category" id="category" ref={category}>
-        </select>
+          
+        </select> 
         <input type="text" name="title" id="desc" placeholder={descr} ref={title} />
         <input type="number" name="price" id="price" placeholder={pr} ref={price} />
         <input type="date" name="date" id='date' placeholder='Income Date...' ref={date} />

@@ -13,6 +13,9 @@ const EditBills = () => {
                 return (
                     <div key={billIndex} className='edit-bill-row'>
                         <div className='edit-bill-row-content'>
+                            <div className='d-inline px-4'>
+                                {bill.category}
+                            </div>
                             <div className='edit-bill-title'>
                                 {bill.title}
                             </div>
@@ -23,7 +26,9 @@ const EditBills = () => {
                                 isPlaned: true,
                                 category: bill.category
                             })}></input> 
-                            <h6 onClick={ () => deleteBill(bill)} className="delete-btn"><FormattedMessage id="delete" defaultMessage='DELETE' /></h6>
+                            <h6 onClick={ () => deleteBill(bill)} className="delete-btn">
+                                <FormattedMessage id="delete" defaultMessage='DELETE' />
+                            </h6>
                         </div>
                         <hr></hr>
                     </div>

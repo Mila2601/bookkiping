@@ -12,6 +12,9 @@
     "planYourBills": "Запланувати витрати",
     "editCategories": "Редагувати категорії",
     "dayStatistic": "Статистика за дату",
+    "monthStatistic": "Статистика за місяць",
+    "yearStatistic": "Статистика за рік",
+    "catStatistic": "Щомісячна статистика по категоріям",
     "pageIsNotFound": "Сторінку не знайдено",
     "year": "Рік",
     "chooseCategory": "Виберіть категорію",
@@ -26,6 +29,8 @@
     "done": "Готово",
     "delete": "ВИДАЛИТИ",
     "add": "ДОДАТИ",
-    "addDeleteCategory": "Редагуй список категорій"
+    "addDeleteCategory": "Редагуй список категорій",
+    "registration": "Регістрація",
+    "registrationBy": "Зареєструйся через Фейсбук або за допомогою Гугл-пошти: "
 }
 

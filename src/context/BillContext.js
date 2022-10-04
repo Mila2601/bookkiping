@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from 'react'
 const BillContext = createContext();
 
 const BillProvider = ({children}) => {
+  const today = new Date().getTime();
 
   const [bills, setBills] = useState([]);
   const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
@@ -18,6 +19,9 @@ const BillProvider = ({children}) => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [categories, setCategories] = useState([]);
   const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
+  const [user, setUser] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedCat, setSelectedCat] = useState('');
 
   function choseLocale(locale) {
     switch (locale) {
@@ -50,17 +54,15 @@ const BillProvider = ({children}) => {
 
   useEffect( () => {
     setBills(JSON.parse(localStorage.getItem('bills')) || [])
-  }, [setBills])
+  }, [])
 
   useEffect( () => {
     setCategories(JSON.parse(localStorage.getItem('categories')) || [])
-  }, [setCategories])
+  }, [])
+
 
   const updateBills = (bill) => {
-    const updatedBills = alfabeticalOrder([
-      ...bills,
-      bill
-    ]);
+    const updatedBills = alfabeticalOrder([...bills, bill]);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
@@ -77,10 +79,7 @@ const BillProvider = ({children}) => {
 
   const editBill = (billToUpdate) => {
     const billsFiltered = bills.filter(bill => bill.title !== billToUpdate.title);
-    const updatedBills = alfabeticalOrder([
-      ...billsFiltered,
-      billToUpdate
-    ]);
+    const updatedBills = alfabeticalOrder([...billsFiltered, billToUpdate]);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
@@ -101,7 +100,9 @@ const BillProvider = ({children}) => {
     let htmlStr = `<option value="">${noCat}</option>`;
     htmlStr += categories.map(category => (`<option value="${category}">${category}</option>`)).join('');
     let selectElement = document.querySelector('select');
-    if (selectElement) {selectElement.innerHTML = htmlStr};
+    if (selectElement) {
+      selectElement.innerHTML = htmlStr;
+    };
   }
 
   return(
@@ -112,12 +113,15 @@ const BillProvider = ({children}) => {
       userLocale, setUserLocale,      
       totalIncome, setTotalIncome,  
       categories, setCategories, 
+      selectedDate, setSelectedDate,
+      user, setUser, 
+      selectedCat, setSelectedCat,     
       updateBills,
       editBill,      
       deleteBill, 
       deleteCategory, 
       updateCategories,
-      renderSelect,        
+      renderSelect,  
       menuTitle,
       phbill,
       phcost,

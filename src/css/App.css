@@ -21,8 +21,35 @@
   padding: 20px;
 }
 
+.registration input[type="text"] {
+  border-radius: 8px 0 0 8px;
+}
+
+.income-form {
+  width: 98% !important;
+}
+
 @media screen and (max-width: 600px){
   h1 {
     font-size: smaller;
+  }
+
+  .left-menu.nav {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1199px){
+  .left-menu.nav {
+    display: none;
+  }
+
+  .statistics {
+    text-align: center;
+  }
+
+  div.home {
+    display: block!important;
+    margin: auto;
   }
 }

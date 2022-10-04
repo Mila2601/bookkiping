@@ -19,7 +19,7 @@ const BillTotal = () => {
                 return 0;
         }
     }
-
+  
   return (<>
     <div className='bill-total-container'>
         <FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="billCost" defaultMessage="bill cost: " /><span className='total-cost'>{

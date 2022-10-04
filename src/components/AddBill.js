@@ -21,10 +21,11 @@ function AddBill() {
   }
 
   const { updateBills, phbill, phcost } = useContext(BillContext);
+  
+
   return (
     <div className='add-bill-container'>
-      <select className="select-planed-bills brands-select mb-2 form-control" name="category" id="category">
-      </select>
+      <select className="select-planed-bills brands-select mb-2 form-control" name="category" id="category" />
       <input className='form-control add-bill-form-control'
              type='text'
              placeholder={phbill}
