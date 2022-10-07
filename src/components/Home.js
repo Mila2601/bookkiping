@@ -10,9 +10,11 @@ function Home () {
 
     useEffect( () => {
         let temp = 0;
-        let filteredBills = bills.filter(bill => bill.isPlaned === false);
+        let filteredBills = bills.filter(bill => {
+            return bill.enabled ? 1 : 0;
+        });
         for ( let i = 0; i < filteredBills.length; i++) {
-            temp += parseInt(filteredBills[i].price);
+            temp += +parseInt(filteredBills[i].price);
         }
         setTotalIncome(temp);
     }, [bills])

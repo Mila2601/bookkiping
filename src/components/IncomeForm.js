@@ -37,8 +37,7 @@ function IncomeForm() {
   return (
     <form className='income-form m-2' onSubmit={AddIncome}>
         <div className='form-inner'>
-        <select className="brands-select" name="category" id="category" ref={category}>
-        </select>
+        <select className="brands-select" name="category" id="category" ref={category} />
         <input type="text" name="title" id="desc" placeholder={descr} ref={title} />
         <input type="number" name="price" id="price" placeholder={pr} ref={price} />
         <input type="date" name="date" id='date' placeholder='Income Date...' ref={date} />

@@ -1,4 +1,5 @@
 import './css/App.css';
+import './css/income-form.css';
 import Header from './components/Header';
 import LeftMenu from './components/LeftMenu';
 import Day from './components/Day';
@@ -9,6 +10,10 @@ import React, { useContext } from 'react';
 import Ukrainian from './components/lang/ua.json';
 import English from './components/lang/en.json';
 import { useEffect } from 'react';
+import Year from './components/Year';
+import CatStatistics from './components/CatStatistics';
+import Registration from './components/Registration';
+import Month from './components/Month';
 
 import {
   BrowserRouter,
@@ -42,26 +47,42 @@ if (locale==="en-US") {
   return (
       <IntlProvider locale={userLocale || locale} messages={lang} defaultLocale="en-US">
         <div className="App">
-          <BrowserRouter>        
+          <BrowserRouter>
             <Routes>
-            <Route path="/" element={<StartPage />}/>       
-              <Route path="/main" element={<div className='container bg-white'>
+            <Route path="/" element={<StartPage />}/>
+            <Route path="/registration" element={<Registration />}/>
+                  <Route path="/main" element={<div className='container bg-white'>
                   <Header />
-                  <LeftMenu />  
-                  <Home />       
-                </div> 
-              }>  
+                  <LeftMenu />
+                  <Home />
+                </div>
+              }>
               </Route>
               <Route path="/day" element={<div className='container bg-white'>
                   <Header />
-                  <LeftMenu />  
-                  <Day />       
-                </div> 
-              }>  
+                  <LeftMenu />
+                  <Day />
+                </div>
+              }>
+              </Route>
+              <Route path="/month" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />
+                  <Month />
+                </div>
+              }>
+              </Route>
+              <Route path="/year" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />
+                  <Year />
+                </div>
+              }>
               </Route> 
               <Route path="/plan-bills" element={
                 <div className='container bg-white'>
                   <Header />
+                  <LeftMenu />
                   <Planing />
                 </div>
               }/>
@@ -70,8 +91,15 @@ if (locale==="en-US") {
                   <Header />
                   <CategoryList />
                 </div>
-              }/>         
-              <Route path="*" element={<NotFound />}/>       
+              }/>
+              <Route path="/categories" element={<div className='container bg-white'>
+                  <Header />
+                  <LeftMenu />
+                  <CatStatistics />
+                </div>
+              }>
+              </Route>
+              <Route path="*" element={<NotFound />}/>
             </Routes>
             <Footer />
           </BrowserRouter>
