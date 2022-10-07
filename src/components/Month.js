@@ -1,41 +1,41 @@
+import { useContext, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { BillContext } from '../context/BillContext';
 import '../css/income-form.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDownShortWide, faArrowUpWideShort, faMagnifyingGlass  } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect } from 'react'
 
-function Day () {
-  const { bills,
-    setSelectedDate,
-    renderBills,
-    typeSearchHere,
-    setClick,
-    click,
-    filtBills,
-    setFiltBills,
+function Month () {
+
+  const { bills,  
+    setSelectedDate, 
+    renderBills, 
+    typeSearchHere, 
+    setClick, 
+    click,    
+    filtBills, 
+    setFiltBills, 
     setListeners,
     setPeriod } = useContext(BillContext);
+  
+    useEffect(() => { 
+      setPeriod('month'); 
+      if (filtBills.length) {
+        renderBills(filtBills);
+      } else {
+        renderBills(bills);
+      }
+    })
 
-  useEffect(() => {
-    setPeriod('day');
-    if (filtBills.length) {
-      renderBills(filtBills);
-    } else {
-      renderBills(bills);
-    }
-  })
-
-  useEffect(() => {
+  useEffect(() => {  
     setListeners()
   }, [click])
 
-
   return (<div className='home statistics d-inline-block text-center mt-4 pb-4'>
-  <h1><FormattedMessage id="dayStatistic" defaultMessage="Day statistics:" /></h1>
+  <h1><FormattedMessage id="monthStatistic" defaultMessage="Month statistics:" /></h1>
   <input className='date-day mt-3' type="date" onChange={ e => {
     setSelectedDate(e.currentTarget.value);
-   }} />
+    }} />
   <div className='p-4 income-list'>
     <div className="searching-container">
       <input className="w-100 mb-3" id="search" placeholder={typeSearchHere} onChange={e =>
@@ -52,7 +52,7 @@ function Day () {
         }));
       } else setFiltBills([])}}/>
       <FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} />
-    </div>
+    </div>        
   <table border="0" cellPadding="0" cellSpacing="0" className="table bg-white">
     <thead>
       <tr className='tr-head'>
@@ -76,7 +76,7 @@ function Day () {
               <FontAwesomeIcon icon={faArrowDownShortWide} className='down d-none'/>
           </th>
           <th onClick={e => setClick([...click, e.currentTarget.getAttribute('data-attr')])}>
-              <FormattedMessage id="date" defaultMessage="Date" />
+              <FormattedMessage id="date" defaultMessage="Date" /> 
               <FontAwesomeIcon icon={faArrowUpWideShort} className='up d-none'/>
               <FontAwesomeIcon icon={faArrowDownShortWide} className='down d-none'/>
           </th>
@@ -84,54 +84,47 @@ function Day () {
     </thead>
     <tbody></tbody>
   </table>
-</div>
+</div> 
 </div>)
 }
 
-//   return (
-//       <div className='statistics'>
-//       <h1><FormattedMessage id="dayStatistic" defaultMessage="Day statistics:" /></h1>
-//       <input className='date-day' type="date" onChange={ e => setSelectedDate((new Date(e.currentTarget.value)).getTime()) } />
+//   return <div className='statistics'>
+//       <h1><FormattedMessage id="monthStatistic" defaultMessage="Month statistics:" /></h1>
+//       <input className='date-day' type="date" onChange={ e => setSelectedDate(e.currentTarget.value) } />
 //       <div className='p-4 income-list mt-3'>
-//     {
-//       bills.map( bill => { 
+//       {
+//         bills.map( bill => { 
 
-//         let day = (date) => {
-//           return date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-//         }
 //         let month = (date) => {
 //             return date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
 //         };
 
 //         if (bill.isPlaned) {
 //           return (
-//               <div className='income-item is-planed'>
+//               <div key={bill.title} className='income-item is-planed'>
 //                   <div>Planed</div>
 //                   <div className='category'>{bill.category}</div>
 //                   <div className='desc'>{bill.title}</div>   
-//                   <div className='price'>{(bill.price * 12 / 365).toFixed(2)} грн</div> 
-//                   <div className='date'>{day(new Date(selectedDate)) + 
-//                   "." + month(new Date(selectedDate)) + 
+//                   <div className='price'>{Number(bill.price).toFixed(2)} грн</div> 
+//                   <div className='date'>{month(new Date(selectedDate)) + 
 //                   "." + (new Date(selectedDate)).getFullYear()}</div>
 //               </div>
 //             ) 
-//         } else if ((new Date(bill.date)).getDate() == (new Date(selectedDate)).getDate()) {      
+//         } else if ((new Date(bill.date)).getMonth() == (new Date(selectedDate)).getMonth()) {      
 //           return (
 //               <div className='income-item'>
 //                   <div className='category'>{bill.category}</div>
 //                   <div className='desc'>{bill.title}</div>   
 //                   <div className='price'>{bill.price} грн</div> 
-//                   <div className='date'>{day(new Date(bill.date)) + 
-//                   "." + month(new Date(bill.date)) + 
+//                   <div className='date'>{month(new Date(bill.date)) + 
 //                   "." + (new Date(bill.date)).getFullYear()}</div>
 //               </div>
 //             )
 //         }
 //       })
-//     } 
-//       </div>
-//       </div>
-//   )
+//     }
+//   </div>  
+//   </div>
 // }
 
-export default Day;
+export default Month;
