@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { BillContext } from '../context/BillContext';
-import '../css/income-form.css';
+import { BillContext } from '../../context/BillContext';
+import '../../css/income-form.css';
 import { FormattedMessage } from 'react-intl';
 
 

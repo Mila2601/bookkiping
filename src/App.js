@@ -5,10 +5,10 @@ import LeftMenu from './components/LeftMenu';
 import Day from './components/Day';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
-import Home from './components/Home';
+import Home from './components/main/Home';
 import React, { useContext } from 'react';
-import Ukrainian from './components/lang/ua.json';
-import English from './components/lang/en.json';
+import Ukrainian from './lang/ua.json';
+import English from './lang/en.json';
 import { useEffect } from 'react';
 import Year from './components/Year';
 import Registration from './components/Registration';
@@ -21,10 +21,10 @@ import {
 } from "react-router-dom";
 
 import {IntlProvider} from 'react-intl';
-import StartPage from './components/StartPage';
-import Planing from './components/Planing';
+import Index from './components/Index';
+import Planing from './components/plan-bills/Planing';
 import { BillContext } from './context/BillContext';
-import CategoryList from './components/CategoryList';
+import CategoryList from './components/edit-categories/CategoryList';
 
 function App() {
   const { userLocale, setCategories, renderSelect } = useContext(BillContext);
@@ -48,7 +48,7 @@ if (locale==="en-US") {
         <div className="App">
           <BrowserRouter>
             <Routes>
-            <Route path="/" element={<StartPage />}/>
+            <Route path="/" element={<Index />}/>
             <Route path="/registration" element={<Registration />}/>
                   <Route path="/main" element={<div className='container bg-white'>
                   <Header />

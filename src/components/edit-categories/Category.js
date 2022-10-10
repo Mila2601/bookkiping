@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { BillContext } from '../context/BillContext';
+import { BillContext } from '../../context/BillContext';
 
 function Category({category}) {
 

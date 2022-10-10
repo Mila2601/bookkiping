@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { BillContext } from '../context/BillContext';
+import { BillContext } from '../../context/BillContext';
 import Category from './Category';
 import AddCategory from './AddCategory';
-import '../css/categories.css';
+import '../../css/categories.css';
 import { FormattedMessage } from 'react-intl';
 
 function CategoryList() {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { BillContext } from '../context/BillContext';
-import '../css/bill-list.css';
+import { BillContext } from '../../context/BillContext';
+import '../../css/bill-list.css';
 import { FormattedNumber, FormattedMessage } from 'react-intl';
 
 function BillList() {

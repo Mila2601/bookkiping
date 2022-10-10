@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BillContext } from '../context/BillContext';
+import { BillContext } from '../../context/BillContext';
 import { FormattedMessage } from 'react-intl';
 
 const BillOptions = () => {
