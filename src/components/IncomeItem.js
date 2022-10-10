@@ -11,7 +11,7 @@ function IncomeItem({bill}) {
         return date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     }
     let month = () => {
-        return date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth() - 1;
+        return date.getMonth() < 9 ? "0" + Number(date.getMonth() + 1) : (date.getMonth() + 1);
     };
 
     if (bill.isPlaned) {
@@ -21,17 +21,18 @@ function IncomeItem({bill}) {
                 <div className='category'>{bill.category}</div>
                 <div className='desc'>{bill.title}</div>
                 <div className='price'>{Number(bill.price).toFixed(2)} грн</div>
-                <div className='date'>{day(new Date(bill.date)) + "." + month(new Date(bill.date)) + "." + (new Date(bill.date)).getFullYear()}</div>
+                <div className='date'>{day(new Date(bill.date)) + "." +month(new Date(bill.date)) + "." + (new Date(bill.date)).getFullYear()}</div>
             </div>
           )
     } else {
+        //console.log(bill, bill.date, month(new Date(bill.date)))
         return (
             <div className='income-item'>
                 <button className='remove-item' onClick={ () => deleteBill(bill)}>x</button>
                 <div className='category'>{bill.category}</div>
                 <div className='desc'>{bill.title}</div>
                 <div className='price'>{Number(bill.price).toFixed(2)} грн</div>
-                <div className='date'>{day(new Date(bill.date)) + "." + month(new Date(bill.date)) + "." + (new Date(bill.date)).getFullYear()}</div>
+                <div className='date'>{day(new Date(bill.date)) + "." +month(new Date(bill.date)) + "." + (new Date(bill.date)).getFullYear()}</div>
             </div>
         )
 }}

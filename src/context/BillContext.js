@@ -15,7 +15,7 @@ const BillProvider = ({children}) => {
   const [pr, setPr] = useState('Price');
   const [addInc, setAddInc] = useState('Add income');
   const [noCat, setNoCat] = useState('No category');
-  const [totalIncome, setTotalIncome] = useState(0);
+  const [total, setTotal] = useState(0);
   const [categories, setCategories] = useState([]);
   const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
   const [user, setUser] = useState([]);
@@ -40,7 +40,8 @@ const BillProvider = ({children}) => {
           setNoCat('Без категорії');
           setAlreadyHaveCat('Така категорія вже існує');
           setNotFound('Не знайдено');
-          setTypeSearchHere('Введіть що шукаєте')
+          setTypeSearchHere('Введіть що шукаєте');
+          setPlaned('Заплановано')
           break
         }
       default:
@@ -53,7 +54,8 @@ const BillProvider = ({children}) => {
           setNoCat('No category');
           setAlreadyHaveCat('You already have that category');
           setNotFound('Not Found');
-          setTypeSearchHere('Type search here')
+          setTypeSearchHere('Type search here');
+          setPlaned('Planed')
           break
         }
     };
@@ -70,10 +72,7 @@ const BillProvider = ({children}) => {
   }, [setCategories])
 
   const updateBills = (bill) => {
-    const updatedBills = alfabeticalOrder([
-      ...bills,
-      bill
-    ]);
+    const updatedBills = alfabeticalOrder([...bills, bill]);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
@@ -108,6 +107,8 @@ const BillProvider = ({children}) => {
 
 function renderBills(bills) {
   let str = '';
+  let temp = 0;
+
 
   switch (period) {
     case 'year':
@@ -115,7 +116,8 @@ function renderBills(bills) {
         const billDateYear = new Date(bill.date).getFullYear();
         const selectedDateYear = new Date(selectedDate).getFullYear() || new Date().getFullYear();
 
-        if (bill.isPlaned) {
+        if (bill.isPlaned && bill.enabled) {
+          temp += +(bill.price * 12);
           return acc + `<tr key={bill.title} class='is-planed'>
                 <td>${planed}</td>
                 <td class='category'>${bill.category || '-'}</td>
@@ -124,6 +126,7 @@ function renderBills(bills) {
                 <td class='date'>${selectedDateYear}</td>
             </tr> `
         } else if ((new Date(bill.date)).getFullYear() == (new Date(selectedDate)).getFullYear()) {
+          temp += +bill.price;
           return acc +
             `<tr class=''>
                 <td>-</td>
@@ -145,7 +148,8 @@ function renderBills(bills) {
       const selectedDateYear = new Date(selectedDate).getFullYear() || new Date().getFullYear();
       const selectedDateMonth = new Date(selectedDate).getMonth() || new Date().getMonth();
 
-        if (bill.isPlaned) {
+        if (bill.isPlaned && bill.enabled) {
+          temp += +bill.price;
           return acc + `<tr key={bill.title} class='is-planed'>
                 <td>${planed}</td>
                 <td class='category'>${bill.category || '-'}</td>
@@ -156,6 +160,7 @@ function renderBills(bills) {
             </tr> `
         } else if (billDateYear == selectedDateYear &&
                    billDateMonth == selectedDateMonth) {
+          temp += +bill.price;
           return acc +
             `<tr class=''>
                 <td>-</td>
@@ -184,12 +189,13 @@ function renderBills(bills) {
         const billDateDay = new Date(bill.date).getDate();
         const selectedDateDay = new Date(selectedDate).getDate() || new Date().getDate();
 
-        if (bill.isPlaned) {
+        if (bill.isPlaned && bill.enabled) {
+          temp += +(bill.price * 12 / 365);
           return acc + `<tr key={bill.title} class='is-planed'>
                 <td>${planed}</td>
                 <td class='category'>${bill.category || '-'}</td>
                 <td class='desc'>${bill.title || '-'}</td>
-                <td class='price'>${Number(bill.price).toFixed(2)} грн</td>
+                <td class='price'>${Number(bill.price * 12 / 365).toFixed(2)} грн</td>
                 <td class='date'>${day(new Date(selectedDate)) +
                   "." + month(new Date(selectedDate)) +
                   "." + selectedDateYear}</td>
@@ -197,6 +203,7 @@ function renderBills(bills) {
         } else if (billDateYear == selectedDateYear &&
                    billDateMonth == selectedDateMonth &&
                    billDateDay == selectedDateDay) {
+          temp += +bill.price;
           return acc +
             `<tr class=''>
                 <td>-</td>
@@ -209,7 +216,7 @@ function renderBills(bills) {
             </tr>`
         } else return acc
       }, '') || `<tr><td style="border-radius: 0  0 20px 20px" colspan="5" >${notFound}</td></tr>`;  }
-
+setTotal(temp.toFixed(2));
 document.querySelector('.table tbody').innerHTML = str;
 setListeners();
 }
@@ -232,7 +239,7 @@ function setIcon() {
               e.currentTarget.removeAttribute('data-sort');
           } else {
               e.currentTarget.querySelector('.up').classList.remove('d-none');
-              e.currentTarget.setAttribute('data-sort', '+');
+              e.currentTarget.setAttribute('data-sort', 'true');
           };
           sortBills(key, isSorted);
       };
@@ -241,11 +248,69 @@ function setIcon() {
 
 function sortBills(key, isSorted) {
   let rendered = bills.sort((a, b) => {
+    if ( key == "price" ) {
       if (isSorted) {
-          return (a[key] > b[key]) ? 1 : -1
+        if (a.isPlaned && b.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] > b[key]) ? 1 : -1
+            case 'month': return (a[key] > b[key]) ? 1 : -1
+            case 'year': return (a[key] > b[key]) ? 1 : -1
+          }
+        } else if (a.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] * 12 / 365 > b[key]) ? 1 : -1
+            case 'month': return (a[key] > b[key]) ? 1 : -1
+            case 'year': return (a[key] * 12 > b[key]) ? 1 : -1
+          }
+        } else if (b.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] > b[key] * 12 / 365) ? 1 : -1
+            case 'month': return (a[key] > b[key]) ? 1 : -1
+            case 'year': return (a[key] > b[key] * 12) ? 1 : -1
+          }
+        } else if (!a.isPlaned && !b.isPlaned) {
+          console.log('we both is not planed')
+          switch (period) {
+            case 'day': return (a[key] > b[key]) ? 1 : -1
+            case 'month': return (a[key] > b[key]) ? 1 : -1
+            case 'year': return (a[key] > b[key]) ? 1 : -1
+          }
+        }
+      } else {
+        if (a.isPlaned && b.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] > b[key]) ? -1 : 1
+            case 'month': return (a[key] > b[key]) ? -1 : 1
+            case 'year': return (a[key] > b[key]) ? -1 : 1
+          }
+        } else if (a.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] * 12 / 365 > b[key]) ? -1 : 1
+            case 'month': return (a[key] > b[key]) ? -1 : 1
+            case 'year': return (a[key] * 12 > b[key]) ? -1 : 1
+          }
+        } else if (b.isPlaned) {
+          switch (period) {
+            case 'day': return (a[key] > b[key] * 12 / 365) ? -1 : 1
+            case 'month': return (a[key] > b[key]) ? -1 : 1
+            case 'year': return (a[key] > b[key] * 12) ? -1 : 1
+          }
+        } else if (!a.isPlaned && !b.isPlaned) {
+          console.log('we both is not planed')
+          switch (period) {
+            case 'day': return (a[key] > b[key]) ? -1 : 1
+            case 'month': return (a[key] > b[key]) ? -1 : 1
+            case 'year': return (a[key] > b[key]) ? -1 : 1
+          }
+        }
+      }
+    } else {
+      if (isSorted) {
+        return (a[key] > b[key]) ? 1 : -1
       } else {
           return (a[key] > b[key]) ? -1 : 1
       }
+    }
   });
   renderBills(rendered);
 }
@@ -275,7 +340,7 @@ function sortBills(key, isSorted) {
       selectedCostInterval, setselectedCostInterval,
       editModeEnabled, setEditModeEnabled,
       userLocale, setUserLocale,
-      totalIncome, setTotalIncome,
+      total, setTotal,
       categories, setCategories,
       selectedDate, setSelectedDate,
       user, setUser,

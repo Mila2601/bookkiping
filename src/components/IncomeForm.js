@@ -15,7 +15,7 @@ function IncomeForm() {
   const AddIncome = e => {
     e.preventDefault();
     let enteredDate = date.current.value.split("-");
-    let newDate = new Date(enteredDate[0], enteredDate[1], enteredDate[2]);
+    let newDate = new Date(enteredDate[0], (enteredDate[1] - 1), enteredDate[2]);
 
     updateBills({
       title: title.current.value,

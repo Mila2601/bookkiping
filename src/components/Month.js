@@ -7,19 +7,20 @@ import { faArrowDownShortWide, faArrowUpWideShort, faMagnifyingGlass  } from '@f
 
 function Month () {
 
-  const { bills,  
-    setSelectedDate, 
-    renderBills, 
-    typeSearchHere, 
-    setClick, 
-    click,    
-    filtBills, 
-    setFiltBills, 
+  const { bills,
+    total,
+    setSelectedDate,
+    renderBills,
+    typeSearchHere,
+    setClick,
+    click,
+    filtBills,
+    setFiltBills,
     setListeners,
     setPeriod } = useContext(BillContext);
-  
-    useEffect(() => { 
-      setPeriod('month'); 
+
+    useEffect(() => {
+      setPeriod('month');
       if (filtBills.length) {
         renderBills(filtBills);
       } else {
@@ -27,7 +28,7 @@ function Month () {
       }
     })
 
-  useEffect(() => {  
+  useEffect(() => {
     setListeners()
   }, [click])
 
@@ -52,7 +53,7 @@ function Month () {
         }));
       } else setFiltBills([])}}/>
       <FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} />
-    </div>        
+    </div>
   <table border="0" cellPadding="0" cellSpacing="0" className="table bg-white">
     <thead>
       <tr className='tr-head'>
@@ -84,6 +85,7 @@ function Month () {
     </thead>
     <tbody></tbody>
   </table>
+  <div className="text-right"><FormattedMessage id='total' defaultMessage='Total: ' />{total} грн</div>
 </div> 
 </div>)
 }

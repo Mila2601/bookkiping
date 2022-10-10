@@ -7,6 +7,7 @@ import { useContext, useEffect } from 'react'
 
 function Day () {
   const { bills,
+    total,
     setSelectedDate,
     renderBills,
     typeSearchHere,
@@ -84,6 +85,7 @@ function Day () {
     </thead>
     <tbody></tbody>
   </table>
+  <div className="text-right"><FormattedMessage id='total' defaultMessage='Total: ' />{total} грн</div>
 </div>
 </div>)
 }

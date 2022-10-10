@@ -21,8 +21,6 @@ const { setUserLocale, menuTitle, user } = useContext(BillContext);
                     <Link className='dropdown-item' to="/day"><FormattedMessage id="day" defaultMessage="Day" /></Link>
                     <Link className='dropdown-item' to="/month"><FormattedMessage id="month" defaultMessage="Month" /></Link>
                     <Link className='dropdown-item' to="/year"><FormattedMessage id="year" defaultMessage="Year" /></Link>
-                    <NavDropdown.Divider />
-                    <Link className='dropdown-item' to="/categories"><FormattedMessage id="categories" defaultMessage="Categories" /></Link>
                 </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

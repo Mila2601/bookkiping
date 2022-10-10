@@ -11,7 +11,6 @@ import Ukrainian from './components/lang/ua.json';
 import English from './components/lang/en.json';
 import { useEffect } from 'react';
 import Year from './components/Year';
-import CatStatistics from './components/CatStatistics';
 import Registration from './components/Registration';
 import Month from './components/Month';
 
@@ -92,13 +91,6 @@ if (locale==="en-US") {
                   <CategoryList />
                 </div>
               }/>
-              <Route path="/categories" element={<div className='container bg-white'>
-                  <Header />
-                  <LeftMenu />
-                  <CatStatistics />
-                </div>
-              }>
-              </Route>
               <Route path="*" element={<NotFound />}/>
             </Routes>
             <Footer />

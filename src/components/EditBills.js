@@ -13,6 +13,9 @@ const EditBills = () => {
                 return (
                     <div key={billIndex} className='edit-bill-row'>
                         <div className='edit-bill-row-content'>
+                        <div className='edit-bill-title'>
+                                {bill.category}
+                            </div>
                             <div className='edit-bill-title'>
                                 {bill.title}
                             </div>
@@ -30,7 +33,7 @@ const EditBills = () => {
                 )
             })
         }  
-        <h6 className='edit-mode-btn mt-3' onClick={() => setEditModeEnabled(false)}>
+        <h6 className='edit-mode-btn mt-3 ml-auto' onClick={() => setEditModeEnabled(false)}>
             <FormattedMessage id="done" defoltMessage='Done' />
         </h6>    
     </div>

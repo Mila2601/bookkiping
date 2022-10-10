@@ -7,19 +7,20 @@ import { faArrowDownShortWide, faArrowUpWideShort, faMagnifyingGlass  } from '@f
 
 function Year () {
 
-  const { bills, 
-    setSelectedDate, 
-    renderBills, 
-    typeSearchHere, 
-    setClick, 
-    click,     
-    filtBills, 
+  const { bills,
+    total,
+    setSelectedDate,
+    renderBills,
+    typeSearchHere,
+    setClick,
+    click,
+    filtBills,
     setFiltBills,
     setListeners,
     setPeriod } = useContext(BillContext);
-  
-    useEffect(() => { 
-      setPeriod('year'); 
+
+    useEffect(() => {
+      setPeriod('year');
       if (filtBills.length) {
         renderBills(filtBills);
       } else {
@@ -27,11 +28,11 @@ function Year () {
       }
     })
 
-  useEffect(() => {  
+  useEffect(() => {
     setListeners()
   }, [click])
 
-      
+
     return (<div className='home statistics d-inline-block text-center mt-4 pb-4'>
         <h1><FormattedMessage id="yearStatistic" defaultMessage="Year statistics:" /></h1>
         <input className='date-day mt-3' type="date" onChange={ e => {
@@ -85,6 +86,7 @@ function Year () {
           </thead>
           <tbody></tbody>
         </table>
+        <div className="text-right"><FormattedMessage id='total' defaultMessage='Total: ' />{total} грн</div>
   </div> 
   </div>)
 }

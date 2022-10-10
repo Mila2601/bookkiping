@@ -11,7 +11,6 @@ function LeftMenu () {
     <li><Link className='nav-link' to="/day"><FormattedMessage id="day" defaultMessage="Day" /></Link></li>
     <li><Link className='nav-link' to="/month"><FormattedMessage id="month" defaultMessage="Month" /></Link></li>
     <li><Link className='nav-link' to="/year"><FormattedMessage id="year" defaultMessage="Year" /></Link></li>
-    <li><Link className='nav-link' to="/categories"><FormattedMessage id="categories" defaultMessage="Categories" /></Link></li>
     </ul>
     <NavDropdown.Divider />
     <Link className='nav-link font-weight-bold' to="/plan-bills"><FormattedMessage id="planYourBills" defaultMessage="Plan your bills" /></Link>
