@@ -42,7 +42,7 @@ function IncomeForm() {
         <input type="number" name="price" id="price" placeholder={pr} ref={price} />
         <input type="date" name="date" id='date' placeholder='Income Date...' ref={date} />
         <input type="submit" value={addInc} />
-        </div>      
+        </div>
     </form>
   )
 }

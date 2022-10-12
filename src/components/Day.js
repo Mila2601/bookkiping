@@ -7,7 +7,7 @@ import { useContext, useEffect } from 'react'
 
 function Day () {
   const { bills,
-    total,
+    total, user,
     setSelectedDate,
     renderBills,
     typeSearchHere,
@@ -30,7 +30,6 @@ function Day () {
   useEffect(() => {
     setListeners()
   }, [click])
-
 
   return (<div className='home statistics d-inline-block text-center mt-4 pb-4'>
   <h1><FormattedMessage id="dayStatistic" defaultMessage="Day statistics:" /></h1>

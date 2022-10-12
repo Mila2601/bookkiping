@@ -4,7 +4,8 @@ import IncomeItem from './IncomeItem';
 
 function IncomeList() {
 
-  const { bills } = useContext(BillContext);
+  //const { bills } = useContext(BillContext);
+  const bills = JSON.parse(localStorage.getItem('bills'));
 
   return (
     <div className='income-list p-2'>

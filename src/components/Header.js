@@ -7,7 +7,8 @@ import { useContext } from 'react';
 import { BillContext } from '../context/BillContext';
 
 function Header () {
-const { setUserLocale, menuTitle, user } = useContext(BillContext);
+    const { setUserLocale, menuTitle, user, setUser} = useContext(BillContext);
+    const currentUser = JSON.parse(localStorage.getItem('user'));
 
     return <div className="header">
         <div className="container">
@@ -25,7 +26,7 @@ const { setUserLocale, menuTitle, user } = useContext(BillContext);
                 </Nav>
             </Navbar.Collapse>
             <div className='languages'>
-              <FormattedMessage id="greeting" defaultMessage="Hey, {user}" values={{name: "Helen"}} />
+              <FormattedMessage id="greeting" defaultMessage="Hey, " />{currentUser.name}
               <Image onClick={() => {setUserLocale('en-US'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 en" src='./media/united-kingdom-en.png'></Image>
               <Image onClick={() => {setUserLocale('uk-UA'); document.querySelector('.en').classList.toggle('d-none'); document.querySelector('.ua').classList.toggle('d-none')}} className="ml-2 ua d-none" src='./media/ukraine.jpg'></Image>
             </div>

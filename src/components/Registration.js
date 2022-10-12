@@ -6,7 +6,7 @@ import "../css/income-form.css";
 
 function Registration() {
 
-    const  { setUser } = useContext(BillContext);
+    const  { setUser, setUsers, setBills } = useContext(BillContext);
 
     const name = useRef(null);
     const email = useRef(null);
@@ -16,7 +16,6 @@ function Registration() {
     function register (e) {
         e.preventDefault();
         if (pass.current.value === passCopy.current.value) {
-            //fetch('https://diplom-05-01.herokuapp.com/users').then(response => response.json()).then( response => alert(response));
             // setUser({
             //     name: name.current.value,
             //     email: email.current.value,
@@ -30,14 +29,37 @@ function Registration() {
             //     },
             //     body: JSON.stringify({email: 'someemail@gmail.com', password: 'qwerty'})
             // }).then(response => response.json()).then( response => alert(response));
-            // console.log(response);
-            // localStorage.setItem('user', JSON.stringify({
-            //     name: name.current.value,
-            //     email: email.current.value,
-            //     password: pass.current.value,
-            // }));
-            //window.location.href = '/main';
-        } else alert("Make sure that password and password repeat are the same");
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(user => user.name === name.current.value)) {alert('You are already in system')} else {
+            users.push({
+                name: name.current.value,
+                email: email.current.value,
+                password: pass.current.value,
+                categories: [],
+                bills: []
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('bills', JSON.stringify([]));
+            localStorage.setItem('categories', JSON.stringify(['Food', 'Rent', 'Phone']));
+            localStorage.setItem('user', JSON.stringify({
+                name: name.current.value,
+                email: email.current.value,
+                password: pass.current.value,
+                categories: ['Food', 'Rent', 'Phone'],
+                bills: []
+            }));
+            setUsers(users);
+            setBills([]);
+            setUser({
+                name: name.current.value,
+                email: email.current.value,
+                password: pass.current.value,
+                categories: ['Food', 'Rent', 'Phone'],
+                bills: []
+            })
+            window.location.href = '/main';
+        }
+      } else alert("Make sure that password and password repeat are the same");
     }
 
   return (

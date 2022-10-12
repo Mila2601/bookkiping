@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from 'react';
 const BillContext = createContext();
 
 const BillProvider = ({children}) => {
+  const [users, setUsers] = useState([]);
   const today = new Date().getTime();
   const [bills, setBills] = useState([]);
   const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
@@ -16,9 +17,9 @@ const BillProvider = ({children}) => {
   const [addInc, setAddInc] = useState('Add income');
   const [noCat, setNoCat] = useState('No category');
   const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(['Food', 'Fun']);
   const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState('');
   const [planed, setPlaned] = useState('Planed');
   const [selectedDate, setSelectedDate] = useState(today);
   const [selectedCat, setSelectedCat] = useState('');
@@ -63,17 +64,26 @@ const BillProvider = ({children}) => {
 
   useEffect(() => choseLocale(userLocale), [userLocale, setUserLocale]);
 
-  useEffect( () => {
-    setBills(JSON.parse(localStorage.getItem('bills')) || [])
-  }, [setBills])
+  // useEffect( () => {
+  //   setBills(JSON.parse(localStorage.getItem('bills')) || [])
+  // }, [setBills])
 
   useEffect( () => {
     setCategories(JSON.parse(localStorage.getItem('categories')) || [])
   }, [setCategories])
 
   const updateBills = (bill) => {
-    const updatedBills = alfabeticalOrder([...bills, bill]);
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    setUser(currentUser);
+    const currentUsers = JSON.parse(localStorage.getItem('users'));
+    const updatedBills = [...JSON.parse(localStorage.getItem('user')).bills, bill];
+    currentUser.bills = updatedBills;
     localStorage.setItem('bills', JSON.stringify(updatedBills));
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    const updatedUsers = currentUsers.map(user => {
+      return (user.name === currentUser.name) ? currentUser : user;
+    });
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
     setBills(updatedBills);
   }
 
@@ -81,6 +91,12 @@ const BillProvider = ({children}) => {
     const updatedCategories = [...categories, category];
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
     setCategories(updatedCategories);
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    currentUser.categories = updatedCategories;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    const users = JSON.parse(localStorage.getItem('users'));
+    const localUsers = users.map( user => user.name === currentUser.name ? currentUser : user)
+    localStorage.setItem('users', JSON.stringify(localUsers));
   }
 
   const alfabeticalOrder = bills => bills.sort( (a, b) => {
@@ -269,7 +285,6 @@ function sortBills(key, isSorted) {
             case 'year': return (a[key] > b[key] * 12) ? 1 : -1
           }
         } else if (!a.isPlaned && !b.isPlaned) {
-          console.log('we both is not planed')
           switch (period) {
             case 'day': return (a[key] > b[key]) ? 1 : -1
             case 'month': return (a[key] > b[key]) ? 1 : -1
@@ -325,6 +340,12 @@ function sortBills(key, isSorted) {
     const updatedCategories = categories.filter(cat => cat !== category);
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
     setCategories(updatedCategories);
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    currentUser.categories = updatedCategories;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    const users = JSON.parse(localStorage.getItem('users'));
+    const localUsers = users.map( user => user.name === currentUser.name ? currentUser : user)
+    localStorage.setItem('users', JSON.stringify(localUsers));
   }
 
   const renderSelect = () => {
@@ -337,6 +358,7 @@ function sortBills(key, isSorted) {
   return(
     <BillContext.Provider value={{
       bills, setBills,
+      users, setUsers,
       selectedCostInterval, setselectedCostInterval,
       editModeEnabled, setEditModeEnabled,
       userLocale, setUserLocale,

@@ -6,7 +6,7 @@ import IncomeList from './IncomeList';
 
 function Home () {
 
-    const {setTotal, bills, total} = useContext(BillContext);
+    const {setTotal, bills, setBills, setCategories, total} = useContext(BillContext);
 
     useEffect( () => {
         let temp = 0;
@@ -18,6 +18,11 @@ function Home () {
         }
         setTotal(temp);
     }, [bills])
+
+    useEffect( () => {
+        setBills(JSON.parse(localStorage.getItem('bills')));
+        setCategories((JSON.parse(localStorage.getItem('categories'))))
+    }, [])
 
     return <div className='home d-inline-block text-center mt-4 pb-4'>
         <h1><FormattedMessage id="addIncomeHere" defaultMessage="Add income / bill here:" /></h1><br />
