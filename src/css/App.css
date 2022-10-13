@@ -21,12 +21,28 @@
   padding: 20px;
 }
 
+.langImg {
+  position: absolute;
+  top: 10px;
+  left: 180px;
+}
+
 @media screen and (max-width: 600px){
   h1 {
     font-size: smaller;
+  }
+
+  .langImg {
+    top: 50px;
+    left: 230px;
   }
 }
 
 .ua {
   border-radius: 50%;
 }
+
+button.exit:hover {
+  background-color: yellow;
+}
+

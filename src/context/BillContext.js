@@ -3,10 +3,21 @@ import React, { createContext, useEffect, useState } from 'react';
 const BillContext = createContext();
 
 const BillProvider = ({children}) => {
+  const [users, setUsers] = useState([]);
   const today = new Date().getTime();
   const [bills, setBills] = useState([]);
-  const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
   const [editModeEnabled, setEditModeEnabled] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [categories, setCategories] = useState(['Food', 'Fun']);
+  const [user, setUser] = useState('');
+  const [selectedCat, setSelectedCat] = useState('');
+  const [click, setClick] = useState([]);
+  const [period, setPeriod] = useState('day');
+  const [filtBills, setFiltBills] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
+
+  // Language constants
   const [userLocale, setUserLocale] = useState('uk-UA');
   const [phbill, setPhbill] = useState('Add notes');
   const [phcost, setPhcost] = useState('Enter bill monthly cost');
@@ -15,18 +26,16 @@ const BillProvider = ({children}) => {
   const [pr, setPr] = useState('Price');
   const [addInc, setAddInc] = useState('Add income');
   const [noCat, setNoCat] = useState('No category');
-  const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState([]);
   const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
-  const [user, setUser] = useState([]);
   const [planed, setPlaned] = useState('Planed');
-  const [selectedDate, setSelectedDate] = useState(today);
-  const [selectedCat, setSelectedCat] = useState('');
   const [notFound, setNotFound] = useState('Not Found');
   const [typeSearchHere, setTypeSearchHere] = useState('Type search here');
-  const [click, setClick] = useState([]);
-  const [period, setPeriod] = useState('day');
-  const [filtBills, setFiltBills] = useState([]);
+  const [pleaseRegister, setPleaseRegister] = useState('Your login was not found. Please register.');
+  const [enterPass, setEnterPass] = useState('Please enter valid password.');
+  const [yourLogin, setYourLogin] = useState('Your login / email');
+  const [yourPass, setYourPass] = useState('Enter password');
+  const [youAreInSystem, setYouAreInSystem] = useState('You are already in system. Please log in.');
+  const [passIsNotTheSame, setPassIsNotTheSame] = useState('Make sure that password and password repeat are the same.');
 
   function choseLocale(locale) {
     switch (locale) {
@@ -41,7 +50,13 @@ const BillProvider = ({children}) => {
           setAlreadyHaveCat('Така категорія вже існує');
           setNotFound('Не знайдено');
           setTypeSearchHere('Введіть що шукаєте');
-          setPlaned('Заплановано')
+          setPlaned('Заплановано');
+          setPleaseRegister('Будь ласка спочатку зареєструйтеся у системі.');
+          setEnterPass('Пароль не співпадає. Будь ласка, введіть вірний пароль.');
+          setYourLogin('Ваш логін');
+          setYourPass('Введіть пароль');
+          setYouAreInSystem('Вас вже зареєстровано. Ви можете увійти в систему.');
+          setPassIsNotTheSame('Будь ласка впевніться, що пароль та повторення паролю збігаються.');
           break
         }
       default:
@@ -55,7 +70,13 @@ const BillProvider = ({children}) => {
           setAlreadyHaveCat('You already have that category');
           setNotFound('Not Found');
           setTypeSearchHere('Type search here');
-          setPlaned('Planed')
+          setPlaned('Planed');
+          setPleaseRegister('Your login was not found. Please register.');
+          setEnterPass('Please enter valid password.');
+          setYourLogin('Your login');
+          setYourPass('Enter password');
+          setYouAreInSystem('You are already in system. Please log in.');
+          setPassIsNotTheSame('Make sure that password and password repeat are the same.');
           break
         }
     };
@@ -63,24 +84,51 @@ const BillProvider = ({children}) => {
 
   useEffect(() => choseLocale(userLocale), [userLocale, setUserLocale]);
 
-  useEffect( () => {
-    setBills(JSON.parse(localStorage.getItem('bills')) || [])
-  }, [setBills])
+  // useEffect( () => setUpdatedUsers(user), [setBills, setCategories])
 
-  useEffect( () => {
-    setCategories(JSON.parse(localStorage.getItem('categories')) || [])
-  }, [setCategories])
+  //   useEffect( () => {
+  //   setBills(bills || [])
+  // }, [setBills])
+
+  //   useEffect( () => {
+  //   setCategories(categories || [])
+  // }, [setCategories])
+
+  // useEffect( () => {
+  //   setBills(JSON.parse(localStorage.getItem('bills')) || [])
+  // }, [setBills])
+
+  // useEffect( () => {
+  //   setCategories(JSON.parse(localStorage.getItem('categories')) || [])
+  // }, [setCategories])
+
+  function setUpdatedUsers (currentUser) {
+    const currentUsers = JSON.parse(JSON.stringify(users));
+    const updatedUsers = currentUsers.map(user => (user.name === currentUser.name) ?currentUser : user);
+    setUsers(updatedUsers);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
 
   const updateBills = (bill) => {
-    const updatedBills = alfabeticalOrder([...bills, bill]);
-    localStorage.setItem('bills', JSON.stringify(updatedBills));
+    const updatedBills = [...bills, bill];
+    const currentUser = JSON.parse(JSON.stringify(user));
+    currentUser.bills = updatedBills;
     setBills(updatedBills);
+    setUser(currentUser);
+    setUpdatedUsers(currentUser);
+    localStorage.setItem('bills', JSON.stringify(updatedBills));
+    localStorage.setItem('user', JSON.stringify(currentUser));
   }
 
   const updateCategories = (category) => {
     const updatedCategories = [...categories, category];
-    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+    const currentUser = JSON.parse(JSON.stringify(user));
+    currentUser.categories = updatedCategories;
     setCategories(updatedCategories);
+    setUser(currentUser);
+    setUpdatedUsers(currentUser);
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+    localStorage.setItem('user', JSON.stringify(currentUser));
   }
 
   const alfabeticalOrder = bills => bills.sort( (a, b) => {
@@ -89,11 +137,11 @@ const BillProvider = ({children}) => {
 
   const editBill = (billToUpdate) => {
     const billsFiltered = bills.filter(bill => bill.title !== billToUpdate.title);
-    const updatedBills = alfabeticalOrder([
-      ...billsFiltered,
-      billToUpdate
-    ]);
-    localStorage.setItem('bills', JSON.stringify(updatedBills));
+    const updatedBills = alfabeticalOrder([...billsFiltered, billToUpdate]);
+    const currentUser = JSON.parse(JSON.stringify(user));
+    currentUser.bills = updatedBills;
+    setUpdatedUsers(currentUser);
+    //localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
 
@@ -269,7 +317,6 @@ function sortBills(key, isSorted) {
             case 'year': return (a[key] > b[key] * 12) ? 1 : -1
           }
         } else if (!a.isPlaned && !b.isPlaned) {
-          console.log('we both is not planed')
           switch (period) {
             case 'day': return (a[key] > b[key]) ? 1 : -1
             case 'month': return (a[key] > b[key]) ? 1 : -1
@@ -325,6 +372,12 @@ function sortBills(key, isSorted) {
     const updatedCategories = categories.filter(cat => cat !== category);
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
     setCategories(updatedCategories);
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    currentUser.categories = updatedCategories;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    const users = JSON.parse(localStorage.getItem('users'));
+    const localUsers = users.map( user => user.name === currentUser.name ? currentUser : user)
+    localStorage.setItem('users', JSON.stringify(localUsers));
   }
 
   const renderSelect = () => {
@@ -337,6 +390,7 @@ function sortBills(key, isSorted) {
   return(
     <BillContext.Provider value={{
       bills, setBills,
+      users, setUsers,
       selectedCostInterval, setselectedCostInterval,
       editModeEnabled, setEditModeEnabled,
       userLocale, setUserLocale,
@@ -365,7 +419,13 @@ function sortBills(key, isSorted) {
       descr,
       addInc,
       noCat,
-      alreadyHaveCat
+      alreadyHaveCat,
+      pleaseRegister,
+      enterPass,
+      yourLogin,
+      yourPass,
+      youAreInSystem,
+      passIsNotTheSame
     }}>
       {children}
     </BillContext.Provider>

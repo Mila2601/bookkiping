@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { BillContext } from '../context/BillContext';
-import '../css/income-form.css';
+import { BillContext } from '../../context/BillContext';
+import '../../css/income-form.css';
 import { FormattedMessage } from 'react-intl';
 
 
@@ -9,7 +9,7 @@ function AddBill() {
   const [newBillTitle, setNewBillTitle] = useState('');
   const [price, setPrice] = useState('');
 
-  const billObjectValid = () => {
+  const isBillObjectValid = () => {
     const costValid = price && Number.parseFloat(price);
     const titleValid = newBillTitle && newBillTitle.split(' ').join('') !== "";
     return titleValid && costValid;
@@ -21,9 +21,12 @@ function AddBill() {
   }
 
   const { updateBills, phbill, phcost } = useContext(BillContext);
+
   return (
     <div className='add-bill-container'>
-      <select className="select-planed-bills brands-select mb-2 form-control" name="category" id="category">
+      <select className="select-planed-bills brands-select mb-2 form-control"
+              name="category"
+              id="category">
       </select>
       <input className='form-control add-bill-form-control'
              type='text'
@@ -37,7 +40,8 @@ function AddBill() {
              onChange={ e => setPrice(e.currentTarget.value) } />  
       <button type="submit" value="Add Bill" onClick={
         () => {
-          if (billObjectValid()) {
+          // Add valid bill to bills array
+          if (isBillObjectValid()) {
             updateBills({
               title: newBillTitle,
               price: price,

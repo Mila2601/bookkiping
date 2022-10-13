@@ -3,7 +3,7 @@ import AddBill from './AddBill';
 import BillList from './BillList';
 import BillTotal from './BillTotal';
 import BillOptions from './BillOptions';
-import { BillContext } from '../context/BillContext';
+import { BillContext } from '../../context/BillContext';
 import EditBills from './EditBills';
 
 function Planing() {
@@ -14,7 +14,12 @@ function Planing() {
   return (
     <div>
       {
-        editModeEnabled ? <EditBills /> : <span><BillOptions /><AddBill /><BillList /><BillTotal /></span>
+        editModeEnabled ? <EditBills /> : <span>
+                                            <BillOptions />
+                                            <AddBill />
+                                            <BillList />
+                                            <BillTotal />
+                                          </span>
       }
     </div>
   )
