@@ -12,12 +12,14 @@ function Header () {
           user,
           setUser,
           setCategories,
-          setBills } = useContext(BillContext);
+          setBills,
+          setUsers } = useContext(BillContext);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
     setBills(JSON.parse(localStorage.getItem('bills')));
     setCategories((JSON.parse(localStorage.getItem('categories'))));
+    setUsers(JSON.parse(localStorage.getItem('users')))
   }, []);
 
 

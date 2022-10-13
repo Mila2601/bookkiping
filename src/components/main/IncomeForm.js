@@ -49,4 +49,4 @@ function IncomeForm() {
   )
 }
 
-export default IncomeForm
+export default IncomeForm;

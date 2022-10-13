@@ -84,39 +84,51 @@ const BillProvider = ({children}) => {
 
   useEffect(() => choseLocale(userLocale), [userLocale, setUserLocale]);
 
+  // useEffect( () => setUpdatedUsers(user), [setBills, setCategories])
+
+  //   useEffect( () => {
+  //   setBills(bills || [])
+  // }, [setBills])
+
+  //   useEffect( () => {
+  //   setCategories(categories || [])
+  // }, [setCategories])
+
   // useEffect( () => {
   //   setBills(JSON.parse(localStorage.getItem('bills')) || [])
   // }, [setBills])
 
-  useEffect( () => {
-    setCategories(JSON.parse(localStorage.getItem('categories')) || [])
-  }, [setCategories])
+  // useEffect( () => {
+  //   setCategories(JSON.parse(localStorage.getItem('categories')) || [])
+  // }, [setCategories])
+
+  function setUpdatedUsers (currentUser) {
+    const currentUsers = JSON.parse(JSON.stringify(users));
+    const updatedUsers = currentUsers.map(user => (user.name === currentUser.name) ?currentUser : user);
+    setUsers(updatedUsers);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
 
   const updateBills = (bill) => {
-    const currentUser = JSON.parse(localStorage.getItem('user'));
-    setUser(currentUser);
-    const currentUsers = JSON.parse(localStorage.getItem('users'));
-    const updatedBills = [...JSON.parse(localStorage.getItem('user')).bills, bill];
+    const updatedBills = [...bills, bill];
+    const currentUser = JSON.parse(JSON.stringify(user));
     currentUser.bills = updatedBills;
+    setBills(updatedBills);
+    setUser(currentUser);
+    setUpdatedUsers(currentUser);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     localStorage.setItem('user', JSON.stringify(currentUser));
-    const updatedUsers = currentUsers.map(user => {
-      return (user.name === currentUser.name) ? currentUser : user;
-    });
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-    setBills(updatedBills);
   }
 
   const updateCategories = (category) => {
     const updatedCategories = [...categories, category];
-    localStorage.setItem('categories', JSON.stringify(updatedCategories));
-    setCategories(updatedCategories);
-    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const currentUser = JSON.parse(JSON.stringify(user));
     currentUser.categories = updatedCategories;
+    setCategories(updatedCategories);
+    setUser(currentUser);
+    setUpdatedUsers(currentUser);
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
     localStorage.setItem('user', JSON.stringify(currentUser));
-    const users = JSON.parse(localStorage.getItem('users'));
-    const localUsers = users.map( user => user.name === currentUser.name ? currentUser : user)
-    localStorage.setItem('users', JSON.stringify(localUsers));
   }
 
   const alfabeticalOrder = bills => bills.sort( (a, b) => {
@@ -126,7 +138,10 @@ const BillProvider = ({children}) => {
   const editBill = (billToUpdate) => {
     const billsFiltered = bills.filter(bill => bill.title !== billToUpdate.title);
     const updatedBills = alfabeticalOrder([...billsFiltered, billToUpdate]);
-    localStorage.setItem('bills', JSON.stringify(updatedBills));
+    const currentUser = JSON.parse(JSON.stringify(user));
+    currentUser.bills = updatedBills;
+    setUpdatedUsers(currentUser);
+    //localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
 
