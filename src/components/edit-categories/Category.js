@@ -8,9 +8,10 @@ function Category({category}) {
 
   return (
     <div className='d-flex justify-content-between'>
-        <div className=''>{category}</div> 
-        <h6 onClick={ () => deleteCategory(category)} 
-            className="delete-btn"><FormattedMessage id="delete" defoltMessage='DELETE' /></h6>      
+        <div>{category}</div> 
+        <h6 onClick={ () => deleteCategory(category)} className="delete-btn">
+          <FormattedMessage id="delete" defoltMessage='DELETE' />
+        </h6>
     </div>
   )
 }

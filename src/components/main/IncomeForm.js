@@ -17,6 +17,7 @@ function IncomeForm() {
     let enteredDate = date.current.value.split("-");
     let newDate = new Date(enteredDate[0], (enteredDate[1] - 1), enteredDate[2]);
 
+    // Add new bill to bills array
     updateBills({
       title: title.current.value,
       price: price.current.value,
@@ -26,6 +27,7 @@ function IncomeForm() {
       date: newDate.getTime()
     });
 
+    // Clear inputs
     title.current.value = "";
     category.current.value = {noCat};
     price.current.value = null;

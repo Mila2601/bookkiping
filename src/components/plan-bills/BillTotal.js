@@ -6,6 +6,7 @@ const BillTotal = () => {
 
     const { bills, selectedCostInterval } = useContext(BillContext);
     const moneyIntervalTransform = cost => {
+
         const monthlyCost = Number.parseFloat(cost);
 
         switch (selectedCostInterval) {
@@ -22,22 +23,31 @@ const BillTotal = () => {
 
   return (<>
     <div className='bill-total-container'>
-        <FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="billCost" defaultMessage="bill cost: " /><span className='total-cost'>{
-            <FormattedNumber value={bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
+        <FormattedMessage id={selectedCostInterval.toLowerCase()}
+                          defaultMessage={selectedCostInterval} />
+        <FormattedMessage id="billCost" defaultMessage="bill cost: " />
+        <span className='total-cost'>{
+            <FormattedNumber value={
+                // Count planed bills total price
+                bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
                 return value.enabled ? acc + moneyIntervalTransform(value.price) : acc
-            }, 0).toFixed(2)} style="currency" currency="UAH" />
-            }</span>
-      
+                }, 0).toFixed(2)} style="currency" currency="UAH" />}
+        </span>
+
     </div>
-    <div className='total-saved-container pb-4'><FormattedMessage id={selectedCostInterval.toLowerCase()} defaultMessage={selectedCostInterval} /> <FormattedMessage id="saved" defaultMessage=" saved: " /><span className='total-saved'> 
-        {
-            <FormattedNumber value={bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
+    <div className='total-saved-container pb-4'>
+        <FormattedMessage id={selectedCostInterval.toLowerCase()}
+                          defaultMessage={selectedCostInterval} />
+        <FormattedMessage id="saved" defaultMessage=" saved: " />
+        <span className='total-saved'>{
+            <FormattedNumber value={
+                // Count money to save if some bills are not enabled
+                bills.filter(bill => bill.isPlaned === true).reduce( (acc, value) => {
                 return !value.enabled ? acc + moneyIntervalTransform(value.price) : acc
-            }, 0).toFixed(2)} style="currency" currency="UAH" />
-        }   
+                }, 0).toFixed(2)} style="currency" currency="UAH" />}
         </span>
     </div>
     </>)
 }
 
-export default BillTotal
+export default BillTotal;

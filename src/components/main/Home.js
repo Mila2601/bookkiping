@@ -6,26 +6,25 @@ import IncomeList from './IncomeList';
 
 function Home () {
 
-    const {setTotal, bills, setBills, setCategories, total} = useContext(BillContext);
+    const {setTotal, bills, total} = useContext(BillContext);
 
     useEffect( () => {
-        let temp = 0;
+        let totalPrice = 0;
+        // Filter enabled bills
         let filteredBills = bills.filter(bill => {
             return bill.enabled ? 1 : 0;
         });
+        // Count enabled bills total price
         for ( let i = 0; i < filteredBills.length; i++) {
-            temp += +parseInt(filteredBills[i].price);
+            totalPrice += +parseInt(filteredBills[i].price);
         }
-        setTotal(temp);
+        setTotal(totalPrice);
     }, [bills])
 
-    useEffect( () => {
-        setBills(JSON.parse(localStorage.getItem('bills')));
-        setCategories((JSON.parse(localStorage.getItem('categories'))))
-    }, [])
-
     return <div className='home d-inline-block text-center mt-4 pb-4'>
-        <h1><FormattedMessage id="addIncomeHere" defaultMessage="Add income / bill here:" /></h1><br />
+        <h1>
+            <FormattedMessage id="addIncomeHere" defaultMessage="Add income / bill here:" />
+        </h1><br />
         <IncomeForm />
         <IncomeList />
         <div className='total-income text-right p-2'>

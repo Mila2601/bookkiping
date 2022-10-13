@@ -6,8 +6,18 @@ const BillProvider = ({children}) => {
   const [users, setUsers] = useState([]);
   const today = new Date().getTime();
   const [bills, setBills] = useState([]);
-  const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
   const [editModeEnabled, setEditModeEnabled] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [categories, setCategories] = useState(['Food', 'Fun']);
+  const [user, setUser] = useState('');
+  const [selectedCat, setSelectedCat] = useState('');
+  const [click, setClick] = useState([]);
+  const [period, setPeriod] = useState('day');
+  const [filtBills, setFiltBills] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedCostInterval, setselectedCostInterval] = useState('Monthly');
+
+  // Language constants
   const [userLocale, setUserLocale] = useState('uk-UA');
   const [phbill, setPhbill] = useState('Add notes');
   const [phcost, setPhcost] = useState('Enter bill monthly cost');
@@ -16,18 +26,16 @@ const BillProvider = ({children}) => {
   const [pr, setPr] = useState('Price');
   const [addInc, setAddInc] = useState('Add income');
   const [noCat, setNoCat] = useState('No category');
-  const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState(['Food', 'Fun']);
   const [alreadyHaveCat, setAlreadyHaveCat] = useState('You already have that category');
-  const [user, setUser] = useState('');
   const [planed, setPlaned] = useState('Planed');
-  const [selectedDate, setSelectedDate] = useState(today);
-  const [selectedCat, setSelectedCat] = useState('');
   const [notFound, setNotFound] = useState('Not Found');
   const [typeSearchHere, setTypeSearchHere] = useState('Type search here');
-  const [click, setClick] = useState([]);
-  const [period, setPeriod] = useState('day');
-  const [filtBills, setFiltBills] = useState([]);
+  const [pleaseRegister, setPleaseRegister] = useState('Your login was not found. Please register.');
+  const [enterPass, setEnterPass] = useState('Please enter valid password.');
+  const [yourLogin, setYourLogin] = useState('Your login / email');
+  const [yourPass, setYourPass] = useState('Enter password');
+  const [youAreInSystem, setYouAreInSystem] = useState('You are already in system. Please log in.');
+  const [passIsNotTheSame, setPassIsNotTheSame] = useState('Make sure that password and password repeat are the same.');
 
   function choseLocale(locale) {
     switch (locale) {
@@ -42,7 +50,13 @@ const BillProvider = ({children}) => {
           setAlreadyHaveCat('Така категорія вже існує');
           setNotFound('Не знайдено');
           setTypeSearchHere('Введіть що шукаєте');
-          setPlaned('Заплановано')
+          setPlaned('Заплановано');
+          setPleaseRegister('Будь ласка спочатку зареєструйтеся у системі.');
+          setEnterPass('Пароль не співпадає. Будь ласка, введіть вірний пароль.');
+          setYourLogin('Ваш логін');
+          setYourPass('Введіть пароль');
+          setYouAreInSystem('Вас вже зареєстровано. Ви можете увійти в систему.');
+          setPassIsNotTheSame('Будь ласка впевніться, що пароль та повторення паролю збігаються.');
           break
         }
       default:
@@ -56,7 +70,13 @@ const BillProvider = ({children}) => {
           setAlreadyHaveCat('You already have that category');
           setNotFound('Not Found');
           setTypeSearchHere('Type search here');
-          setPlaned('Planed')
+          setPlaned('Planed');
+          setPleaseRegister('Your login was not found. Please register.');
+          setEnterPass('Please enter valid password.');
+          setYourLogin('Your login');
+          setYourPass('Enter password');
+          setYouAreInSystem('You are already in system. Please log in.');
+          setPassIsNotTheSame('Make sure that password and password repeat are the same.');
           break
         }
     };
@@ -105,10 +125,7 @@ const BillProvider = ({children}) => {
 
   const editBill = (billToUpdate) => {
     const billsFiltered = bills.filter(bill => bill.title !== billToUpdate.title);
-    const updatedBills = alfabeticalOrder([
-      ...billsFiltered,
-      billToUpdate
-    ]);
+    const updatedBills = alfabeticalOrder([...billsFiltered, billToUpdate]);
     localStorage.setItem('bills', JSON.stringify(updatedBills));
     setBills(updatedBills);
   }
@@ -387,7 +404,13 @@ function sortBills(key, isSorted) {
       descr,
       addInc,
       noCat,
-      alreadyHaveCat
+      alreadyHaveCat,
+      pleaseRegister,
+      enterPass,
+      yourLogin,
+      yourPass,
+      youAreInSystem,
+      passIsNotTheSame
     }}>
       {children}
     </BillContext.Provider>

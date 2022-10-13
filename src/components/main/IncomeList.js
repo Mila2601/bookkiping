@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { BillContext } from '../../context/BillContext';
 import IncomeItem from './IncomeItem';
 
 function IncomeList() {
 
-  //const { bills } = useContext(BillContext);
-  const bills = JSON.parse(localStorage.getItem('bills'));
+  const { bills } = useContext(BillContext);
 
+// Sort enable bills by date
   return (
     <div className='income-list p-2'>
       <div>{bills.filter((el) => el.enabled === true ).sort((a, b) => {
@@ -21,4 +21,4 @@ function IncomeList() {
   )
 }
 
-export default IncomeList
+export default IncomeList;

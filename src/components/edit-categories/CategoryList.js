@@ -11,9 +11,13 @@ function CategoryList() {
 
   return (
     <div className='category-list mt-4 pb-4'>
-        <h1 className='mb-4'><FormattedMessage id='addDeleteCategory' defaultMessage='Edit list of categories' /></h1>
-        {categories.sort().map( (category, index) => (<Category category={category} key={index}/>))}
-        <AddCategory />
+        <h1 className='mb-4'>
+          <FormattedMessage id='addDeleteCategory' defaultMessage='Edit list of categories' />
+        </h1>
+        {
+          categories.sort().map( (category, index) => (<Category category={category} key={index}/>))
+        }
+        <AddCategory/>
     </div>
   )
 }
