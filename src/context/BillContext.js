@@ -37,9 +37,9 @@ const BillProvider = ({children}) => {
   const [youAreInSystem, setYouAreInSystem] = useState('You are already in system. Please log in.');
   const [passIsNotTheSame, setPassIsNotTheSame] = useState('Make sure that password and password repeat are the same.');
   const [chartBarLabel, setChartBarLabel] = useState('Statistics by categories');
-  const [labels, setLabels] = useState(['Categories']);
+  const [labelsForBar, setLabelsForBar] = useState(['Categories']);
   const [chartLineLabel, setChartLineLabel] = useState('Statistics by month')
-  const [labels1, setLabels1] = useState(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+  const [labelsForLine, setLabelsForLine] = useState(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
 
 
   function choseLocale(locale) {
@@ -64,8 +64,8 @@ const BillProvider = ({children}) => {
           setPassIsNotTheSame('Будь ласка впевніться, що пароль та повторення паролю збігаються.');
           setChartBarLabel('Статистика за категоріями');
           setChartLineLabel('Статистика по місяцям');
-          setLabels(['Категорії']);
-          setLabels1(['Січень', 'Лютий', 'Березень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень']);
+          setLabelsForBar(['Категорії']);
+          setLabelsForLine(['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень']);
           break
         }
       default:
@@ -88,8 +88,8 @@ const BillProvider = ({children}) => {
           setPassIsNotTheSame('Make sure that password and password repeat are the same.');
           setChartBarLabel('Statistics by categories');
           setChartLineLabel('Statistics by month');
-          setLabels(['Categories']);
-          setLabels1(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+          setLabelsForBar(['Categories']);
+          setLabelsForLine(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
           break
         }
     };
@@ -305,9 +305,12 @@ const datasetsForBar = categories.map( function (category) {
 
 const datasetsForLine = categories.map( function (category, index) { // 6 objects
     const totalPerMonth = []; // 12 points
-    for (let i = 0; i < labels1.length; i++ ) {
+    for (let i = 0; i < labelsForLine.length; i++ ) {
       totalPerMonth[i] = bills.reduce( (acc, bill) => {
-      if ((new Date(bill.date)).getFullYear() == (new Date()).getFullYear() && (new Date(bill.date)).getMonth() == i && bill.category == categories[index] && bill.enabled) {
+      if ((new Date(bill.date)).getFullYear() == (new Date()).getFullYear() &&
+          (new Date(bill.date)).getMonth() == i &&
+          bill.category == categories[index] &&
+          bill.enabled) {
         acc += +bill.price;
         deg += 25;
         if (deg >= 360) {
@@ -485,8 +488,8 @@ function sortBills(key, isSorted) {
       datasetsForBar,
       chartBarLabel,
       chartLineLabel,
-      labels,
-      labels1,
+      labelsForBar,
+      labelsForLine,
       datasetsForLine,
       planed
     }}>

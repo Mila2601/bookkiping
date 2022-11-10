@@ -19,14 +19,14 @@ function Registration() {
     // Compare the password and a copy of the password for detection case of an accidental mistake
     if (pass.current.value === passCopy.current.value) {
       // TODO: Organize receiving data from the server.
-      let response = fetch('https://homebuhone.herokuapp.com/', {
-          method: 'POST',
-          mode: "cors",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({name: 'someemail@gmail.com'})
-      }).then(response => response.json()).then( response => alert(response));
+      // let response = fetch('https://homebuhone.herokuapp.com/', {
+      //     method: 'POST',
+      //     mode: "cors",
+      //     headers: {
+      //         "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({name: 'someemail@gmail.com'})
+      // }).then(response => response.json()).then( response => alert(response));
 
       let users = JSON.parse(localStorage.getItem('users')) || [];
 
@@ -60,7 +60,7 @@ function Registration() {
           bills: []
         }));
 
-        //window.location.href = '/main';
+        window.location.href = '/main';
         }
     } else alert(passIsNotTheSame);
   }

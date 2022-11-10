@@ -31,9 +31,17 @@ import { Bar, Line } from 'react-chartjs-2';
 
 function Home () {
 
-    const {setTotal, bills, total, datasetsForBar, datasetsForLine, chartBarLabel, chartLineLabel, labels, labels1} = useContext(BillContext);
+    const {setTotal,
+           bills,
+           total,
+           datasetsForBar,
+           datasetsForLine,
+           chartBarLabel,
+           chartLineLabel,
+           labelsForBar,
+           labelsForLine} = useContext(BillContext);
 
-    const options = {
+    const optionsForBar = {
       responsive: true,
       plugins: {
         legend: {position: 'top',
@@ -45,12 +53,12 @@ function Home () {
       },
     };
 
-    const data = {
-      labels: labels,
+    const dataForBar = {
+      labels: labelsForBar,
       datasets: datasetsForBar,
     };
 
-    const options1 = {
+    const optionsForLine = {
       responsive: true,
       plugins: {
         legend: {position: 'top',
@@ -62,8 +70,8 @@ function Home () {
       },
     };
 
-    const data1 = {
-      labels: labels1,
+    const dataForLine = {
+      labels: labelsForLine,
       datasets: datasetsForLine
     };
 
@@ -90,8 +98,8 @@ function Home () {
             <FormattedMessage id="total" defaultMessage="Total: " />
             <FormattedNumber value={total} style="currency" currency="UAH" />
         </div>
-        <div><Bar options={options} data={data} /></div>
-        <div><Line options={options1} data={data1} /></div>
+        <div><Bar options={optionsForBar} data={dataForBar} /></div>
+        <div><Line options={optionsForLine} data={dataForLine} /></div>
     </div>
 }
  export default Home;
