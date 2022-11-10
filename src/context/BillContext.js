@@ -36,6 +36,11 @@ const BillProvider = ({children}) => {
   const [yourPass, setYourPass] = useState('Enter password');
   const [youAreInSystem, setYouAreInSystem] = useState('You are already in system. Please log in.');
   const [passIsNotTheSame, setPassIsNotTheSame] = useState('Make sure that password and password repeat are the same.');
+  const [chartBarLabel, setChartBarLabel] = useState('Statistics by categories');
+  const [labels, setLabels] = useState(['Categories']);
+  const [chartLineLabel, setChartLineLabel] = useState('Statistics by month')
+  const [labels1, setLabels1] = useState(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+
 
   function choseLocale(locale) {
     switch (locale) {
@@ -57,6 +62,10 @@ const BillProvider = ({children}) => {
           setYourPass('Введіть пароль');
           setYouAreInSystem('Вас вже зареєстровано. Ви можете увійти в систему.');
           setPassIsNotTheSame('Будь ласка впевніться, що пароль та повторення паролю збігаються.');
+          setChartBarLabel('Статистика за категоріями');
+          setChartLineLabel('Статистика по місяцям');
+          setLabels(['Категорії']);
+          setLabels1(['Січень', 'Лютий', 'Березень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень']);
           break
         }
       default:
@@ -77,6 +86,10 @@ const BillProvider = ({children}) => {
           setYourPass('Enter password');
           setYouAreInSystem('You are already in system. Please log in.');
           setPassIsNotTheSame('Make sure that password and password repeat are the same.');
+          setChartBarLabel('Statistics by categories');
+          setChartLineLabel('Statistics by month');
+          setLabels(['Categories']);
+          setLabels1(['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
           break
         }
     };
@@ -240,7 +253,7 @@ function renderBills(bills) {
         if (bill.isPlaned && bill.enabled) {
           temp += +(bill.price * 12 / 365);
           return acc + `<tr key={bill.title} class='is-planed'>
-                <td>${planed}</td>
+                <td>{planed}</td>
                 <td class='category'>${bill.category || '-'}</td>
                 <td class='desc'>${bill.title || '-'}</td>
                 <td class='price'>${Number(bill.price * 12 / 365).toFixed(2)} грн</td>
@@ -268,6 +281,49 @@ setTotal(temp.toFixed(2));
 document.querySelector('.table tbody').innerHTML = str;
 setListeners();
 }
+
+let deg = 0;
+
+const datasetsForBar = categories.map( function (category) {
+  const catTotal = bills.reduce( (acc, bill) => {
+    if (bill.category == category && bill.enabled) {
+      acc += +bill.price;
+      deg += 25;
+      if (deg >= 360) {
+        deg -= 360;
+      }
+    }
+    return acc;
+  }, 0);
+  return {
+      label: category,
+      data: [catTotal],
+      borderColor: `hsl(${deg}, 50%, 50%)`,
+      backgroundColor: `hsl(${deg}, 50%, 80%)`,
+    }
+});
+
+const datasetsForLine = categories.map( function (category, index) { // 6 objects
+    const totalPerMonth = []; // 12 points
+    for (let i = 0; i < labels1.length; i++ ) {
+      totalPerMonth[i] = bills.reduce( (acc, bill) => {
+      if ((new Date(bill.date)).getFullYear() == (new Date()).getFullYear() && (new Date(bill.date)).getMonth() == i && bill.category == categories[index] && bill.enabled) {
+        acc += +bill.price;
+        deg += 25;
+        if (deg >= 360) {
+          deg -= 360;
+        }
+      }
+      return acc;
+    }, 0);
+  }
+  return {
+    label: category,
+    data: totalPerMonth,
+    borderColor: `hsl(${deg}, 50%, 50%)`,
+    backgroundColor: `hsl(${deg}, 50%, 80%)`,
+  }
+});
 
 function clearIcon() {
   for (let i of document.querySelectorAll('.svg-inline--fa')) {
@@ -425,7 +481,14 @@ function sortBills(key, isSorted) {
       yourLogin,
       yourPass,
       youAreInSystem,
-      passIsNotTheSame
+      passIsNotTheSame,
+      datasetsForBar,
+      chartBarLabel,
+      chartLineLabel,
+      labels,
+      labels1,
+      datasetsForLine,
+      planed
     }}>
       {children}
     </BillContext.Provider>

@@ -4,9 +4,68 @@ import { BillContext } from '../../context/BillContext';
 import IncomeForm from './IncomeForm';
 import IncomeList from './IncomeList';
 
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+
 function Home () {
 
-    const {setTotal, bills, total} = useContext(BillContext);
+    const {setTotal, bills, total, datasetsForBar, datasetsForLine, chartBarLabel, chartLineLabel, labels, labels1} = useContext(BillContext);
+
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {position: 'top',
+        },
+        title: {
+          display: true,
+          text: chartBarLabel,
+        },
+      },
+    };
+
+    const data = {
+      labels: labels,
+      datasets: datasetsForBar,
+    };
+
+    const options1 = {
+      responsive: true,
+      plugins: {
+        legend: {position: 'top',
+        },
+        title: {
+          display: true,
+          text: chartLineLabel,
+        },
+      },
+    };
+
+    const data1 = {
+      labels: labels1,
+      datasets: datasetsForLine
+    };
 
     useEffect( () => {
         let totalPrice = 0;
@@ -31,6 +90,8 @@ function Home () {
             <FormattedMessage id="total" defaultMessage="Total: " />
             <FormattedNumber value={total} style="currency" currency="UAH" />
         </div>
+        <div><Bar options={options} data={data} /></div>
+        <div><Line options={options1} data={data1} /></div>
     </div>
 }
  export default Home;

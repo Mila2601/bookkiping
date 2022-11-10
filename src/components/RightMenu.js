@@ -5,14 +5,34 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from "react-intl";
 import { BillContext } from '../context/BillContext';
 
+
+
 function RightMenu() {
   const { pleaseRegister, enterPass, setUserLocale, yourLogin, yourPass } = useContext(BillContext);
 
   function login (e) {
     e.preventDefault();
-    // fetch('https://diplom-05-01.herokuapp.com/users').
+    // fetch('https://homebuhone.herokuapp.com/').
     // then(response => response.json()).
-    // then( response => alert(response));
+    // then( response => {
+    //   alert(response);
+    // });
+
+    // fetch('https://homebuhone.herokuapp.com/').
+    // then(response => response.json()).
+    // then( response => {
+    //   alert(JSON.stringify(response));
+    // });
+
+
+    let response = fetch('https://homebuhone.herokuapp.com/').then(response => response.json()).then(response => alert(response));
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299
+      // получаем тело ответа (см. про этот метод ниже)
+      let json = response.json();
+      console.log(json);
+    } else {
+      alert("Ошибка HTTP: " + response);
+    }
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
@@ -26,7 +46,7 @@ function RightMenu() {
         localStorage.setItem('user', JSON.stringify(users[i]));
         localStorage.setItem('bills', JSON.stringify(users[i].bills));
         localStorage.setItem('categories', JSON.stringify(users[i].categories));
-        window.location.assign('/main');
+        //window.location.assign('/main');
         break
       } else if (document.querySelector('#login').value === users[i].name &&
                  document.querySelector('#password').value !== users[i].password) {
