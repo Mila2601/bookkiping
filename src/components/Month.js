@@ -100,7 +100,7 @@ function Month () {
   <div className="text-right">
     <FormattedMessage id='total' defaultMessage='Total: ' />{total} грн
   </div>
-</div> 
+</div>
 </div>)
 }
 

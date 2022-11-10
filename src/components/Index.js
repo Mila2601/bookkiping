@@ -24,6 +24,9 @@ function Index() {
             }
             <Image className="mb-4" src="./media/image.png"/>
             <Image src="./media/image1.png"/>
+            <Image src="./media/image2.jpg"/>
+            <Image src="./media/image3.jpg"/>
+            <Image src="./media/image4.jpg"/>
         </div>
         <RightMenu />
     </div>

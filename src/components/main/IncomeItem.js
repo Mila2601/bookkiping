@@ -4,7 +4,7 @@ import { BillContext } from '../../context/BillContext';
 
 function IncomeItem({bill}) {
 
-    const {deleteBill} = useContext(BillContext);
+    const {deleteBill, planed} = useContext(BillContext);
 
     let date = new Date(bill.date);
     let day = () => {
@@ -18,7 +18,7 @@ function IncomeItem({bill}) {
     if (bill.isPlaned) {
         return (
             <div className='income-item is-planed'>
-                <div>Planed</div>
+                <div>{planed}</div>
                 <div className='category'>{bill.category}</div>
                 <div className='desc'>{bill.title}</div>
                 <div className='price'>{Number(bill.price).toFixed(2)} грн</div>
