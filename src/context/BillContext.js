@@ -253,7 +253,7 @@ function renderBills(bills) {
         if (bill.isPlaned && bill.enabled) {
           temp += +(bill.price * 12 / 365);
           return acc + `<tr key={bill.title} class='is-planed'>
-                <td>{planed}</td>
+                <td>${planed}</td>
                 <td class='category'>${bill.category || '-'}</td>
                 <td class='desc'>${bill.title || '-'}</td>
                 <td class='price'>${Number(bill.price * 12 / 365).toFixed(2)} грн</td>
@@ -307,10 +307,16 @@ const datasetsForLine = categories.map( function (category, index) { // 6 object
     const totalPerMonth = []; // 12 points
     for (let i = 0; i < labelsForLine.length; i++ ) {
       totalPerMonth[i] = bills.reduce( (acc, bill) => {
-      if ((new Date(bill.date)).getFullYear() == (new Date()).getFullYear() &&
+      if (// For unplaned bills
+        (new Date(bill.date)).getFullYear() == (new Date()).getFullYear() &&
           (new Date(bill.date)).getMonth() == i &&
           bill.category == categories[index] &&
-          bill.enabled) {
+          !bill.isPlaned ||
+          // For planed bills
+          (bill.enabled && bill.isPlaned &&
+           bill.category == categories[index] &&
+           (new Date(bill.date)).getFullYear() <= (new Date()).getFullYear()) &&
+           (new Date(bill.date)).getMonth() <= i) {
         acc += +bill.price;
         deg += 25;
         if (deg >= 360) {
